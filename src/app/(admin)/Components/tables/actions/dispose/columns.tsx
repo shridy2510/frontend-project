@@ -106,16 +106,19 @@ export const columns: ColumnDef<Payment>[] = [
 
 
     {
-        accessorKey: "cost",
-        header: ({ column }) => {
+        accessorKey:"Actions",
+        id: "actions",
+        cell: ({ row }) => {
+            const payment = row.original
+
             return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Cost
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
+                <div className="flex gap-2"> {/* Add gap between buttons */}
+                    <Button className=" border border-[#EE6352] text-[#EE6352] bg-white "
+                            onClick={() => navigator.clipboard.writeText(payment.id)}>
+                        <Trash></Trash>
+                        Dispose
+                    </Button>
+                </div>
             )
         },
     },

@@ -59,48 +59,46 @@ export function DataTable<TData, TValue>({
         },
 
     })
-
-    return (<div>
-        <div className="flex items-center py-4">
+    return (
+        <div>
             <div className="flex items-center py-4">
-                <Input
-                    placeholder="Filter Asset Tag..."
-                    value={(table.getColumn("assetTag")?.getFilterValue() as string) ?? ""}
-                    onChange={(event) =>
-                        table.getColumn("assetTag")?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-sm"
-                />
+                <div className="flex items-center py-4">
+                    <Input
+                        placeholder="Filter Asset Tag..."
+                        value={(table.getColumn("assetTag")?.getFilterValue() as string) ?? ""}
+                        onChange={(event) =>
+                            table.getColumn("assetTag")?.setFilterValue(event.target.value)
+                        }
+                        className="max-w-sm"
+                    />
+                </div>
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="outline" className="ml-auto">
+                            Columns
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        {table
+                            .getAllColumns()
+                            .filter((column) => column.getCanHide())
+                            .map((column) => {
+                                return (
+                                    <DropdownMenuCheckboxItem
+                                        key={column.id}
+                                        className="capitalize"
+                                        checked={column.getIsVisible()}
+                                        onCheckedChange={(value) =>
+                                            column.toggleVisibility(!!value)
+                                        }
+                                    >
+                                        {column.id}
+                                    </DropdownMenuCheckboxItem>
+                                );
+                            })}
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </div>
-            <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="ml-auto">
-                        Columns
-                    </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                    {table
-                        .getAllColumns()
-                        .filter(
-                            (column) => column.getCanHide()
-                        )
-                        .map((column) => {
-                            return (
-                                <DropdownMenuCheckboxItem
-                                    key={column.id}
-                                    className="capitalize"
-                                    checked={column.getIsVisible()}
-                                    onCheckedChange={(value) =>
-                                        column.toggleVisibility(!!value)
-                                    }
-                                >
-                                    {column.id}
-                                </DropdownMenuCheckboxItem>
-                            )
-                        })}
-                </DropdownMenuContent>
-            </DropdownMenu>
-        </div>
 
             <div className="rounded-md border">
                 <Table>
@@ -117,7 +115,7 @@ export function DataTable<TData, TValue>({
                                                     header.getContext()
                                                 )}
                                         </TableHead>
-                                    )
+                                    );
                                 })}
                             </TableRow>
                         ))}
@@ -143,6 +141,18 @@ export function DataTable<TData, TValue>({
                                 </TableCell>
                             </TableRow>
                         )}
+                        {/* Add the total row here */}
+                        <TableRow>
+                            <TableCell></TableCell>
+                            <TableCell className="font-bold ">
+                                {table.getRowModel().rows.length} assets
+                            </TableCell>
+                            <TableCell></TableCell>
+                            <TableCell></TableCell>
+                            <TableCell className="font-bold ">
+                                {table.getRowModel().rows.reduce((total, row) => total + row.original.cost, 0).toFixed(2)}
+                            </TableCell>
+                        </TableRow>
                     </TableBody>
                 </Table>
                 <div className="flex items-center justify-end space-x-2 py-4">
@@ -164,8 +174,5 @@ export function DataTable<TData, TValue>({
                     </Button>
                 </div>
             </div>
-        </div>
-
-
-    )
-}
+        </div>)
+    }

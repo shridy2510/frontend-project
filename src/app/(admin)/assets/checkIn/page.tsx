@@ -1,8 +1,9 @@
-import {columns} from "@/app/(admin)/Components/tables/reports/statusReports/available/columns";
-import {DataTable} from "@/app/(admin)/Components/tables/reports/statusReports/available/data-table";
+import {columns} from "@/app/(admin)/Components/tables/actions/checkIn/columns";
+import {DataTable} from "@/app/(admin)/Components/tables/actions/checkIn/data-table";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 
-import {FileChartColumn,} from "lucide-react";
+import {FileChartColumn, UserRoundMinus,} from "lucide-react";
+import React from "react";
 
 
 async function getData(): Promise<Payment[]> {
@@ -39,13 +40,13 @@ export default async function AvailableStatusReportPage() {
     return (
         <div className="content p-8">
         <h1 className="scroll-m-20 text-3xl font-bold tracking-tight mb-6 flex items-center gap-2">
-        <FileChartColumn size={32} />
-    Report
+            <UserRoundMinus size={32} />
+            Check In
     </h1>
     <div className="ml-16 mr-24">
     <Card className="p-4">
         <CardHeader>
-            <CardTitle>Available Asset</CardTitle>
+            <CardTitle>Available Assets</CardTitle>
     </CardHeader>
     <CardContent>
 

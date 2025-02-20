@@ -1,13 +1,6 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel, DropdownMenuSeparator,
-    DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu";
 import {ArrowUpDown, MoreHorizontal} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {Checkbox} from "@/components/ui/checkbox";
@@ -20,6 +13,7 @@ export type Payment = {
     status: "pending" | "processing" | "success" | "failed"
     email: string
 }
+
 
 export const columns: ColumnDef<Payment>[] = [
     {
@@ -72,48 +66,6 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
-        accessorKey: "serial",
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Serial
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
-    },
-    {
-        accessorKey: "model",
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Model No.
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
-    },
-    {
-        accessorKey: "company",
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Company
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
-    },
-    {
         accessorKey: "status",
         header: ({ column }) => {
             return (
@@ -127,40 +79,17 @@ export const columns: ColumnDef<Payment>[] = [
             )
         },
     },
-
     {
-        accessorKey:"Actions",
-        id: "actions",
-        cell: ({ row }) => {
-            const payment = row.original
-
+        accessorKey: "cost",
+        header: ({ column }) => {
             return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(payment.id)}
-                        >
-                            View
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>Broken </DropdownMenuItem>
-                        <DropdownMenuItem>Check Out </DropdownMenuItem>
-                        <DropdownMenuItem>Check In</DropdownMenuItem>
-                        <DropdownMenuItem>Dispose </DropdownMenuItem>
-                        <DropdownMenuItem>Lost/Missing </DropdownMenuItem>
-                        <DropdownMenuItem>Repair </DropdownMenuItem>
-                        <DropdownMenuItem>Delete </DropdownMenuItem>
-
-                        <DropdownMenuSeparator />
-
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Cost
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
             )
         },
     },

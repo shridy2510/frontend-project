@@ -1,8 +1,9 @@
-import {columns} from "@/app/(admin)/Components/tables/reports/assetReports/byCategory/columns";
-import {DataTable} from "@/app/(admin)/Components/tables/reports/assetReports/byCategory/data-table";
+import {columns} from "@/app/(admin)/Components/tables/reports/statusReports/broken/columns";
+import {DataTable} from "@/app/(admin)/Components/tables/reports/statusReports/broken/data-table";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 
 import {FileChartColumn,} from "lucide-react";
+import AvailableStatusReportPage from "@/app/(admin)/report/status/available/page";
 
 
 async function getData(): Promise<Payment[]> {
@@ -10,10 +11,11 @@ async function getData(): Promise<Payment[]> {
     return [
         {
             id: "728ed52f",
-            category: "Consumable",
+            assetTag: "43434ab",
             serial:"abdcd123",
             assetName: "laptop",
             model: " macbook air",
+            company: "apple",
             cost: 1000
 
         },
@@ -23,6 +25,7 @@ async function getData(): Promise<Payment[]> {
             serial:"a1fedfe23",
             assetName: "apple Music",
             model: "",
+            company: "apple",
             cost: 2000
 
         },
@@ -31,7 +34,7 @@ async function getData(): Promise<Payment[]> {
     ]
 }
 
-export default async function CategoryReportPage() {
+export default async function BrokenStatusReportPage() {
     const data = await getData()
 
     return (
@@ -43,7 +46,7 @@ export default async function CategoryReportPage() {
     <div className="ml-16 mr-24">
     <Card className="p-4">
         <CardHeader>
-            <CardTitle>Assets Report by Category</CardTitle>
+            <CardTitle>Broken Assets</CardTitle>
     </CardHeader>
     <CardContent>
 

@@ -17,14 +17,14 @@ export type Payment = {
 
 export const columns: ColumnDef<Payment>[] = [
     {
-        accessorKey: "company",
+        accessorKey: "assetTag",
         header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Company
+                    Asset TagID
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
@@ -45,6 +45,34 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
+        accessorKey: "company",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Company
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+    },
+    {
+        accessorKey: "model",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Model
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+    },
+    {
         accessorKey: "serial",
         header: ({ column }) => {
             return (
@@ -58,6 +86,7 @@ export const columns: ColumnDef<Payment>[] = [
             )
         },
     },
+
 
     {
         accessorKey: "cost",

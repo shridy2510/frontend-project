@@ -17,35 +17,14 @@ export type Payment = {
 
 export const columns: ColumnDef<Payment>[] = [
     {
-        id: "select",
-        header: ({ table }) => (
-            <Checkbox
-                checked={
-                    table.getIsAllPageRowsSelected() ||
-                    (table.getIsSomePageRowsSelected() && "indeterminate")
-                }
-                onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-                aria-label="Select all"
-            />
-        ),
-        cell: ({ row }) => (
-            <Checkbox
-                checked={row.getIsSelected()}
-                onCheckedChange={(value) => row.toggleSelected(!!value)}
-                aria-label="Select row"
-            />
-        ),
-
-    },
-    {
-        accessorKey: "assetTag",
+        accessorKey: "company",
         header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Asset Tag ID
+                    Company
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
@@ -66,19 +45,20 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
-        accessorKey: "status",
+        accessorKey: "serial",
         header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Status
+                    Serial
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
         },
     },
+
     {
         accessorKey: "cost",
         header: ({ column }) => {

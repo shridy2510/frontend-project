@@ -1,5 +1,5 @@
-import {columns} from "@/app/(admin)/Components/tables/reports/assetReports/byTagId/columns";
-import {DataTable} from "@/app/(admin)/Components/tables/reports/assetReports/byTagId/data-table";
+import {columns} from "@/app/(admin)/Components/tables/reports/assetReports/byCompany/columns";
+import {DataTable} from "@/app/(admin)/Components/tables/reports/assetReports/byCompany/data-table";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 
 import {FileChartColumn,} from "lucide-react";
@@ -10,19 +10,17 @@ async function getData(): Promise<Payment[]> {
     return [
         {
             id: "728ed52f",
-            assetTag: "OK123",
+            company: "apple",
             serial:"abdcd123",
             assetName: "Laptop",
-            status: "Broken",
             cost: 1000
 
         },
         {
             id: "39fvdvdd",
-            assetTag: "OK121",
+            company: "samsung",
             serial:"a1fedfe23",
             assetName: "Laptop",
-            status: "Checked Out",
             cost: 2000
 
         },
@@ -31,7 +29,7 @@ async function getData(): Promise<Payment[]> {
     ]
 }
 
-export default async function AssetListPage() {
+export default async function CompanyReportPage() {
     const data = await getData()
 
     return (
@@ -43,7 +41,7 @@ export default async function AssetListPage() {
     <div className="ml-16 mr-24">
     <Card className="p-4">
         <CardHeader>
-            <CardTitle>Report Assets by Tag IDs</CardTitle>
+            <CardTitle>Assets by Company</CardTitle>
     </CardHeader>
     <CardContent>
 

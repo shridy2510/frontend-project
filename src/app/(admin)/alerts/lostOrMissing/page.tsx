@@ -1,9 +1,10 @@
-import {columns} from "@/app/(admin)/Components/tables/reports/statusReports/broken/columns";
-import {DataTable} from "@/app/(admin)/Components/tables/reports/statusReports/broken/data-table";
+import {columns} from "@/app/(admin)/Components/tables/alerts/lostOrMissing/columns";
+import {DataTable} from "@/app/(admin)/Components/tables/alerts/lostOrMissing/data-table";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 
 import {FileChartColumn,} from "lucide-react";
 import AvailableStatusReportPage from "@/app/(admin)/report/status/available/page";
+import AlertBrokenAssetPage from "@/app/(admin)/alerts/broken/page";
 
 
 async function getData(): Promise<Payment[]> {
@@ -15,8 +16,7 @@ async function getData(): Promise<Payment[]> {
             serial:"abdcd123",
             assetName: "laptop",
             model: " macbook air",
-            company: "apple",
-            cost: 1000
+            company: "apple"
 
         },
         {
@@ -25,8 +25,7 @@ async function getData(): Promise<Payment[]> {
             serial:"a1fedfe23",
             assetName: "apple Music",
             model: "",
-            company: "apple",
-            cost: 2000
+            company: "apple"
 
         },
 
@@ -34,7 +33,7 @@ async function getData(): Promise<Payment[]> {
     ]
 }
 
-export default async function BrokenStatusReportPage() {
+export default async function AlertLostAssetPage() {
     const data = await getData()
 
     return (
@@ -46,7 +45,7 @@ export default async function BrokenStatusReportPage() {
     <div className="ml-16 mr-24">
     <Card className="p-4">
         <CardHeader>
-            <CardTitle>Broken Assets</CardTitle>
+            <CardTitle>Lost Or Missing Assets</CardTitle>
     </CardHeader>
     <CardContent>
 

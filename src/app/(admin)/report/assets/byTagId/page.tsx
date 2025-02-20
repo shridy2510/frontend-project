@@ -1,6 +1,7 @@
-import {columns} from "@/app/(admin)/Components/tables/reports/assetReports/byTagId";
-import {DataTable} from "@/app/(admin)/Components/tables/reports/assetReports/byTagId";
+import {columns} from "@/app/(admin)/Components/tables/reports/assetReports/byTagId/columns";
+import {DataTable} from "@/app/(admin)/Components/tables/reports/assetReports/byTagId/data-table";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+
 import {FileChartColumn,} from "lucide-react";
 
 
@@ -13,7 +14,7 @@ async function getData(): Promise<Payment[]> {
             serial:"abdcd123",
             assetName: "Laptop",
             status: "Broken",
-            cost: "1000"
+            cost: 1000
 
         },
         {
@@ -22,14 +23,15 @@ async function getData(): Promise<Payment[]> {
             serial:"a1fedfe23",
             assetName: "Laptop",
             status: "Checked Out",
-            cost: "2000"
+            cost: 2000
 
         },
+
         // ...
     ]
 }
 
-export default async function AssetListPage() {
+export default async function TagIdReportPage() {
     const data = await getData()
 
     return (
@@ -41,7 +43,7 @@ export default async function AssetListPage() {
     <div className="ml-16 mr-24">
     <Card className="p-4">
         <CardHeader>
-            <CardTitle>Report Assets by Tag IDs</CardTitle>
+            <CardTitle>Assets by Tag ID</CardTitle>
     </CardHeader>
     <CardContent>
 

@@ -18,27 +18,26 @@ import {
     ChartTooltipContent,
 } from "@/components/ui/chart"
 const chartData = [
-    { month: "January", desktop: 186 },
-    { month: "February", desktop: 305 },
-    { month: "March", desktop: 237 },
-    { month: "April", desktop: 73 },
-    { month: "May", desktop: 209 },
-    { month: "June", desktop: 214 },
+    { status: "Checked Out", value: 186, },
+    { status: "Available", value: 305 },
+    { status: "Broken", value: 237 },
+    { status: "Lost/Missing", value: 73 },
+    { status: "Disposed", value: 209 },
+    { status: "Under Repair", value: 214 },
 ]
 
 const chartConfig = {
-    desktop: {
-        label: "Desktop",
-        color: "hsl(var(--chart-1))",
-    },
+    value: {
+        label: "Value",
+        color: "hsl(var(--chart-8))",
+    }
 } satisfies ChartConfig
 
-export function assetValuePerCompanyBarChart() {
+export function AssetValueByStatusBarChart() {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Asset Value Per Cate</CardTitle>
-                <CardDescription></CardDescription>
+                <CardTitle>Asset Value By Status</CardTitle>
             </CardHeader>
             <CardContent>
                 <ChartContainer config={chartConfig}>
@@ -51,17 +50,17 @@ export function assetValuePerCompanyBarChart() {
                     >
                         <CartesianGrid vertical={false} />
                         <XAxis
-                            dataKey="month"
+                            dataKey="status"
                             tickLine={false}
                             tickMargin={10}
                             axisLine={false}
-                            tickFormatter={(value) => value.slice(0, 3)}
+                            tickFormatter={(value) => value.slice(0, 15)}
                         />
                         <ChartTooltip
                             cursor={false}
                             content={<ChartTooltipContent hideLabel />}
                         />
-                        <Bar dataKey="desktop" fill="var(--color-desktop)" radius={8}>
+                        <Bar dataKey="value" fill="var(--color-value)" radius={8}>
                             <LabelList
                                 position="top"
                                 offset={12}
@@ -69,17 +68,12 @@ export function assetValuePerCompanyBarChart() {
                                 fontSize={12}
                             />
                         </Bar>
+
+
                     </BarChart>
                 </ChartContainer>
             </CardContent>
-            <CardFooter className="flex-col items-start gap-2 text-sm">
-                <div className="flex gap-2 font-medium leading-none">
-                    Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-                </div>
-                <div className="leading-none text-muted-foreground">
-                    Showing total visitors for the last 6 months
-                </div>
-            </CardFooter>
+
         </Card>
     )
 }

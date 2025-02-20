@@ -1,5 +1,5 @@
-import {columns} from "@/app/(admin)/Components/tables/reports/assetReports/byCategory/columns";
-import {DataTable} from "@/app/(admin)/Components/tables/reports/assetReports/byCategory/data-table";
+import {columns} from "@/app/(admin)/Components/tables/reports/checkOutReport/columns";
+import {DataTable} from "@/app/(admin)/Components/tables/reports/checkOutReport/data-table";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 
 import {FileChartColumn,} from "lucide-react";
@@ -10,28 +10,32 @@ async function getData(): Promise<Payment[]> {
     return [
         {
             id: "728ed52f",
-            category: "Consumable",
+            company: "apple",
+            assetTag: "43434ab",
             serial:"abdcd123",
             assetName: "laptop",
             model: " macbook air",
+            user: "son",
             cost: 1000
 
         },
         {
-            id: "39fvdvdd",
-            category: "software",
-            serial:"a1fedfe23",
-            assetName: "apple Music",
-            model: "",
-            cost: 2000
+            id: "728ed52sdf",
+            company: "apple",
+            assetTag: "43434ab",
+            serial:"abdcd123",
+            assetName: "laptop",
+            model: " macbook air",
+            user: "son",
+            cost: 1000
 
-        },
+        }
 
         // ...
     ]
 }
 
-export default async function CategoryReportPage() {
+export default async function CheckOutReportPage() {
     const data = await getData()
 
     return (
@@ -43,7 +47,7 @@ export default async function CategoryReportPage() {
     <div className="ml-16 mr-24">
     <Card className="p-4">
         <CardHeader>
-            <CardTitle>Assets Report by Category</CardTitle>
+            <CardTitle>Checked Out Assets</CardTitle>
     </CardHeader>
     <CardContent>
 

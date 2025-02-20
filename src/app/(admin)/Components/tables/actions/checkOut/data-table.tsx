@@ -144,15 +144,14 @@ export function DataTable<TData, TValue>({
                         {/* Add the total row here */}
                         <TableRow>
                             <TableCell className="font-bold ">
-                                {table.getRowModel().rows.length} assets
+                                {table.getRowModel().rows.length} available assets
                             </TableCell>
                             <TableCell></TableCell>
                             <TableCell></TableCell>
                             <TableCell></TableCell>
                             <TableCell></TableCell>
-                            <TableCell className="font-bold ">
-                                {table.getRowModel().rows.reduce((total, row) => total + row.original.cost, 0).toFixed(2)}
-                            </TableCell>
+                            <TableCell></TableCell>
+
                         </TableRow>
                     </TableBody>
                 </Table>

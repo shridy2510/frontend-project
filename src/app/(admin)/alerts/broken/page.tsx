@@ -1,5 +1,5 @@
-import {columns} from "@/app/(admin)/Components/tables/reports/statusReports/broken/columns";
-import {DataTable} from "@/app/(admin)/Components/tables/reports/statusReports/broken/data-table";
+import {columns} from "@/app/(admin)/Components/tables/alerts/broken/columns";
+import {DataTable} from "@/app/(admin)/Components/tables/alerts/broken/data-table";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 
 import {FileChartColumn,} from "lucide-react";
@@ -15,8 +15,8 @@ async function getData(): Promise<Payment[]> {
             serial:"abdcd123",
             assetName: "laptop",
             model: " macbook air",
-            company: "apple",
-            cost: 1000
+            company: "apple"
+
 
         },
         {
@@ -25,8 +25,7 @@ async function getData(): Promise<Payment[]> {
             serial:"a1fedfe23",
             assetName: "apple Music",
             model: "",
-            company: "apple",
-            cost: 2000
+            company: "apple"
 
         },
 
@@ -34,7 +33,7 @@ async function getData(): Promise<Payment[]> {
     ]
 }
 
-export default async function BrokenStatusReportPage() {
+export default async function AlertBrokenAssetPage() {
     const data = await getData()
 
     return (

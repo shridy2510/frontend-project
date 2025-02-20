@@ -1,5 +1,5 @@
-import {columns} from "@/app/(admin)/Components/tables/reports/statusReports/broken/columns";
-import {DataTable} from "@/app/(admin)/Components/tables/reports/statusReports/broken/data-table";
+import {columns} from "@/app/(admin)/Components/tables/alerts/underRepair/columns";
+import {DataTable} from "@/app/(admin)/Components/tables/alerts/underRepair/data-table";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 
 import {FileChartColumn,} from "lucide-react";
@@ -15,8 +15,7 @@ async function getData(): Promise<Payment[]> {
             serial:"abdcd123",
             assetName: "laptop",
             model: " macbook air",
-            company: "apple",
-            cost: 1000
+            company: "apple"
 
         },
         {
@@ -25,16 +24,14 @@ async function getData(): Promise<Payment[]> {
             serial:"a1fedfe23",
             assetName: "apple Music",
             model: "",
-            company: "apple",
-            cost: 2000
-
+            company: "apple"
         },
 
         // ...
     ]
 }
 
-export default async function BrokenStatusReportPage() {
+export default async function AlertUnderRepairAssetPage() {
     const data = await getData()
 
     return (
@@ -46,7 +43,7 @@ export default async function BrokenStatusReportPage() {
     <div className="ml-16 mr-24">
     <Card className="p-4">
         <CardHeader>
-            <CardTitle>Broken Assets</CardTitle>
+            <CardTitle>Under Repair Assets</CardTitle>
     </CardHeader>
     <CardContent>
 

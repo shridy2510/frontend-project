@@ -4,10 +4,10 @@ import * as React from "react"
 import {
   AudioWaveform,
   BookOpen,
-  Bot,
-  Command,
+  Bot, CircleAlert,
+  Command, FileChartColumn, Flag,
   Frame,
-  GalleryVerticalEnd,
+  GalleryVerticalEnd, House, Laptop, LayoutDashboard, List,
   Map,
   PieChart,
   Settings2,
@@ -22,9 +22,12 @@ import {
   SidebarHeader, SidebarProvider,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import {NavMain} from "@/app/Components/sidebar/nav-main";
-import {NavProjects} from "@/app/Components/sidebar/nav-projects";
-import {NavUser} from "@/app/Components/sidebar/nav-user";
+import {NavMain} from "@/app/(admin)/Components/sidebar/nav-main";
+import {NavProjects} from "@/app/(admin)/Components/sidebar/nav-projects";
+import {NavUser} from "@/app/(admin)/Components/sidebar/nav-user";
+import {useEffect, useState} from "react";
+import getUserInfoById from "@/app/service/userService/getUserInfoById";
+
 
 // This is sample data.
 const data = {
@@ -36,86 +39,113 @@ const data = {
 
   navMain: [
     {
-      title: "Playground",
-      url: "/",
-      icon: SquareTerminal,
+      title: "Alerts",
+      url: "#",
+      icon: Flag,
       isActive: true,
       items: [
         {
-          title: "History",
+          title: "Asset Past Due",
           url: "/dashboard",
         },
         {
-          title: "Starred",
+          title: "Available",
           url: "#",
         },
         {
-          title: "Settings",
+          title: "Broken",
           url: "#",
         },
+        {
+          title: "Lost/Missing",
+          url: "#",
+        },
+
       ],
     },
     {
-      title: "Models",
+      title: "Assets",
       url: "#",
-      icon: Bot,
+      icon:Laptop,
       items: [
         {
-          title: "Genesis",
+          title: "List of Assets",
           url: "#",
         },
         {
-          title: "Explorer",
+          title: "Add an Asset",
           url: "#",
         },
         {
-          title: "Quantum",
+          title: "Check out",
+          url: "#",
+        },
+        {
+          title: "Check in",
+          url: "#",
+        },
+        {
+          title: "Dispose",
           url: "#",
         },
       ],
     },
     {
-      title: "Documentation",
+      title: "Lists",
       url: "#",
-      icon: BookOpen,
+      icon: List,
       items: [
         {
-          title: "Introduction",
+          title: "List of Assets",
           url: "#",
         },
         {
-          title: "Get Started",
+          title: "List of Others",
           url: "#",
         },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
+
       ],
     },
     {
-      title: "Settings",
+      title: "Reports",
+      url: "#",
+      icon: FileChartColumn,
+      items: [
+        {
+          title: "Asset Reports",
+          url: "#",
+        },
+        {
+          title: "Check-Out Reports",
+          url: "#",
+        },
+        {
+          title: "Status Reports",
+          url: "#",
+        },
+
+      ],
+    },
+
+    {
+      title: "Setup",
       url: "#",
       icon: Settings2,
       items: [
         {
-          title: "General",
+          title: "Company Info",
           url: "#",
         },
         {
-          title: "Team",
+          title: "Categories",
           url: "#",
         },
         {
-          title: "Billing",
+          title: "Models",
           url: "#",
         },
         {
-          title: "Limits",
+          title: "Manufacturer",
           url: "#",
         },
       ],
@@ -141,18 +171,45 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    avatar:""
+  });
+  useEffect(() => {
+    const userid=localStorage.getItem("User_id");
+    fetchUserData(userid);
+
+
+
+
+
+
+  }, []);
+  async function fetchUserData(id){
+    const response= await getUserInfoById(id);
+    setUserData({
+      name: response.data.firstName,
+      email: response.data.email,
+      avatar: ""
+    })
+
+  }
+
+
   return (
 
     <Sidebar collapsible="icon" {...props} className="pt-16 flex">
       <SidebarHeader >
-        <NavUser user={data.user} />
+        <NavUser user={userData} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavMain />
+
       </SidebarContent>
 
-      <SidebarRail />
+      <SidebarRail/>
     </Sidebar>
   )
 }

@@ -128,7 +128,7 @@ export const columns: ColumnDef<Payment>[] = [
 
             return (
                 <div className="flex gap-2"> {/* Add gap between buttons */}
-                    <Button className="h-7 w-7 border border-[#1E7B56] text-[#1E7B56] bg-white"
+                    <Button className="h-7 w-7 border border-[#7796CB] text-[#7796CB] bg-white"
                             onClick={() => navigator.clipboard.writeText(payment.id)}>
                         <Pencil/>
                     </Button>

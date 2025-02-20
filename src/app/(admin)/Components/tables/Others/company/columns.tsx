@@ -101,7 +101,7 @@ export const columns: ColumnDef<Payment>[] = [
                 // </DropdownMenu>
 
                 <div className="flex gap-2"> {/* Add gap between buttons */}
-                    <Button className="h-7 w-7 border border-[#1E7B56] text-[#1E7B56] bg-white" onClick={() => navigator.clipboard.writeText(payment.id)}>
+                    <Button className="h-7 w-7 border border-[#7796CB] text-[#7796CB] bg-white" onClick={() => navigator.clipboard.writeText(payment.id)}>
                         <Pencil />
                     </Button>
                     <Button className="h-7 w-7 border border-[#EE6352] text-[#EE6352] bg-white" onClick={() => navigator.clipboard.writeText(payment.id)}>

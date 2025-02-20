@@ -45,6 +45,20 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
+        accessorKey: "company",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Company
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+    },
+    {
         accessorKey: "model",
         header: ({ column }) => {
             return (
@@ -73,21 +87,6 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
-        accessorKey: "company",
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Company
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
-    },
-
-    {
         accessorKey: "cost",
         header: ({ column }) => {
             return (
@@ -101,4 +100,21 @@ export const columns: ColumnDef<Payment>[] = [
             )
         },
     },
+
+
+    {
+        accessorKey: "user",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Checked out to
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+    },
+
 ]

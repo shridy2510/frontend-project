@@ -44,56 +44,56 @@ export const columns: ColumnDef<Payment>[] = [
 
     },
     {
-        accessorKey: "assetTag",
+        accessorKey: "userName",
         header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Asset Tag ID
+                    User Name
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
         },
     },
     {
-        accessorKey: "assetName",
+        accessorKey: "gmail",
         header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Asset Name
+                    Gmail
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
         },
     },
     {
-        accessorKey: "serial",
+        accessorKey: "firstName",
         header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Serial
+                    First Name
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
         },
     },
     {
-        accessorKey: "model",
+        accessorKey: "lastname",
         header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Model No.
+                    Last Name
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
@@ -114,14 +114,28 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
-        accessorKey: "status",
+        accessorKey: "phoneNumber",
         header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Status
+                    Phone Number
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+    },
+    {
+        accessorKey: "role",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Title
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )

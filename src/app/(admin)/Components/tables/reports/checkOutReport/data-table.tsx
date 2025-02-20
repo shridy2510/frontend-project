@@ -64,10 +64,10 @@ export function DataTable<TData, TValue>({
             <div className="flex items-center py-4">
                 <div className="flex items-center py-4">
                     <Input
-                        placeholder="Filter Company..."
-                        value={(table.getColumn("company")?.getFilterValue() as string) ?? ""}
+                        placeholder="Filter by User name..."
+                        value={(table.getColumn("user")?.getFilterValue() as string) ?? ""}
                         onChange={(event) =>
-                            table.getColumn("company")?.setFilterValue(event.target.value)
+                            table.getColumn("user")?.setFilterValue(event.target.value)
                         }
                         className="max-w-sm"
                     />
@@ -146,6 +146,9 @@ export function DataTable<TData, TValue>({
                             <TableCell className="font-bold ">
                                 {table.getRowModel().rows.length} assets
                             </TableCell>
+                            <TableCell></TableCell>
+                            <TableCell></TableCell>
+                            <TableCell></TableCell>
                             <TableCell></TableCell>
                             <TableCell></TableCell>
                             <TableCell className="font-bold ">

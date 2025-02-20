@@ -1,6 +1,27 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel, DropdownMenuSeparator,
+    DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
+import {
+    ArrowUpDown,
+    Eye,
+    MapPinOff,
+    MoreHorizontal,
+    Pencil, ShieldAlert,
+    Trash,
+    Trash2,
+    UserRoundCheck,
+    UserRoundMinus, Wrench
+} from "lucide-react";
+import {Button} from "@/components/ui/button";
+import {Checkbox} from "@/components/ui/checkbox";
+import React from "react";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -13,15 +34,169 @@ export type Payment = {
 
 export const columns: ColumnDef<Payment>[] = [
     {
+        id: "select",
+        header: ({ table }) => (
+            <Checkbox
+                checked={
+                    table.getIsAllPageRowsSelected() ||
+                    (table.getIsSomePageRowsSelected() && "indeterminate")
+                }
+                onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+                aria-label="Select all"
+            />
+        ),
+        cell: ({ row }) => (
+            <Checkbox
+                checked={row.getIsSelected()}
+                onCheckedChange={(value) => row.toggleSelected(!!value)}
+                aria-label="Select row"
+            />
+        ),
+
+    },
+    {
+        accessorKey: "assetTag",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Asset Tag ID
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+    },
+    {
+        accessorKey: "assetName",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Asset Name
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+    },
+    {
+        accessorKey: "serial",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Serial
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+    },
+    {
+        accessorKey: "model",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Model No.
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+    },
+    {
+        accessorKey: "company",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Company
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+    },
+    {
         accessorKey: "status",
-        header: "Status",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Status
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
     },
+
     {
-        accessorKey: "email",
-        header: "Email",
-    },
-    {
-        accessorKey: "amount",
-        header: "Amount",
+        accessorKey:"Actions",
+        id: "actions",
+        cell: ({ row }) => {
+            const payment = row.original
+
+            return (
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="h-8 w-8 p-0">
+                            <span className="sr-only">Open menu</span>
+                            <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                        <DropdownMenuSeparator/>
+                        <DropdownMenuItem
+                            onClick={() => navigator.clipboard.writeText(payment.id)}
+                        >
+                            <Eye color="#0A0A0A" />
+                            View
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <Pencil color="#7796CB"/>
+                            Edit
+                        </DropdownMenuItem>
+
+                        <DropdownMenuItem>
+                            <Trash2 color="#EE6352"/>
+                            Delete
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator/>
+                        <DropdownMenuItem>
+                            <UserRoundCheck  />
+                            Check Out </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <UserRoundMinus />
+                            Check In</DropdownMenuItem>
+                        <DropdownMenuSeparator/>
+                        <DropdownMenuItem>
+                            <ShieldAlert />
+                            Broken </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <Trash></Trash>
+                            Dispose </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <MapPinOff />
+                            Lost/Missing </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <Wrench />
+                            Repair </DropdownMenuItem>
+
+                        <DropdownMenuSeparator />
+
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            )
+        },
     },
 ]

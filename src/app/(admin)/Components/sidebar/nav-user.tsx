@@ -4,9 +4,9 @@ import {
   BadgeCheck,
   Bell,
   ChevronsUpDown,
-  CreditCard,
+  CreditCard, KeyRound,
   LogOut,
-  Sparkles,
+  Sparkles, User, UserRoundPlus,
 } from "lucide-react"
 
 import {
@@ -33,6 +33,7 @@ import Cookies from "js-cookie";
 import {useRouter} from "next/navigation";
 import axios from "axios";
 import keycloakConfig from "@/app/keycloak.config";
+import logout from "@/app/service/userService/logout";
 
 
 
@@ -58,25 +59,12 @@ export function NavUser({
   const router = useRouter();
 
 
+
   const logOut= async ()=>{
-    const refresh_token:string= Cookies.get('refresh_token') as string
-    Cookies.remove('access_token');
-    Cookies.remove('refresh_token')
-    const logout_url=`${process.env.NEXT_PUBLIC_KEYCLOAK_URL}/realms/${process.env.NEXT_PUBLIC_KEYCLOAK_REALM}/protocol/openid-connect/logout`;
-    const params = new URLSearchParams();
-    params.append('client_id', `${keycloakConfig.client_id}`);
-    params.append('refresh_token', refresh_token);
-   await axios.post(logout_url,params
-      )
-       .then(function (response) {
-         console.log(response);
-       })
-       .catch(function (error) {
-      throw(error.response)})
+    await logout;
+    router.push('/login')
+    localStorage.removeItem("User_id")
 
-
-
-    await router.push('/login')
 
   }
 
@@ -101,12 +89,12 @@ export function NavUser({
               </SidebarMenuButton>
             </DropdownMenuTrigger>
             <DropdownMenuContent
-                className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+                className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg mt-16"
                 side={isMobile ? "bottom" : "right"}
                 align="end"
                 sideOffset={4}
             >
-              <DropdownMenuLabel className="p-0 font-normal ">
+              <DropdownMenuLabel className="p-0 font-normal  ">
                 <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                   <Avatar className="h-8 w-8 rounded-lg">
                     <AvatarImage src={user.avatar} alt={user.name} />
@@ -120,25 +108,31 @@ export function NavUser({
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
-                <DropdownMenuItem>
-                  <Sparkles />
-                  Upgrade to Pro
-                </DropdownMenuItem>
+                <a href="/user/userProfile">
+                  <DropdownMenuItem>
+                    <User/>
+                    <span>My Profile</span>
+                  </DropdownMenuItem>
+                </a>
               </DropdownMenuGroup>
-              <DropdownMenuSeparator />
+              <DropdownMenuSeparator/>
               <DropdownMenuGroup>
-                <DropdownMenuItem>
-                  <BadgeCheck />
-                  Account
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <CreditCard />
-                  Billing
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Bell />
-                  Notifications
-                </DropdownMenuItem>
+                <a href="/user/changePassword">
+                  <DropdownMenuItem>
+                    <KeyRound/>
+                    Change Password
+                  </DropdownMenuItem>
+                </a>
+                <a href="/user/createUser">
+                  <DropdownMenuItem>
+                    <UserRoundPlus/>
+                    Create new Users
+                  </DropdownMenuItem>
+                </a>
+                  <DropdownMenuItem>
+                    <Bell/>
+                    Notifications
+                  </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={logOut} >

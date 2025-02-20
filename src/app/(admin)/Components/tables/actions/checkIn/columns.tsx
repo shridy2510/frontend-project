@@ -119,5 +119,22 @@ export const columns: ColumnDef<Payment>[] = [
             )
         },
     },
+    {
+        accessorKey:"Actions",
+        id: "actions",
+        cell: ({ row }) => {
+            const payment = row.original
+
+            return (
+                <div className="flex gap-2"> {/* Add gap between buttons */}
+                    <Button className=" border border-[#7796CB] text-[#7796CB] bg-white"
+                            onClick={() => navigator.clipboard.writeText(payment.id)}>
+                        <UserRoundMinus />
+                        Check In
+                    </Button>
+                </div>
+            )
+        },
+    },
 
 ]

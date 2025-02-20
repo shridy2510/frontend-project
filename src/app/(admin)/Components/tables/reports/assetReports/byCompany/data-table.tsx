@@ -64,10 +64,10 @@ export function DataTable<TData, TValue>({
             <div className="flex items-center py-4">
                 <div className="flex items-center py-4">
                     <Input
-                        placeholder="Filter Asset Tag..."
-                        value={(table.getColumn("assetTag")?.getFilterValue() as string) ?? ""}
+                        placeholder="Filter Company..."
+                        value={(table.getColumn("company")?.getFilterValue() as string) ?? ""}
                         onChange={(event) =>
-                            table.getColumn("assetTag")?.setFilterValue(event.target.value)
+                            table.getColumn("company")?.setFilterValue(event.target.value)
                         }
                         className="max-w-sm"
                     />
@@ -143,7 +143,6 @@ export function DataTable<TData, TValue>({
                         )}
                         {/* Add the total row here */}
                         <TableRow>
-                            <TableCell></TableCell>
                             <TableCell className="font-bold ">
                                 {table.getRowModel().rows.length} assets
                             </TableCell>

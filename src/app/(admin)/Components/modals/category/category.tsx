@@ -16,7 +16,7 @@ import {Plus} from "lucide-react";
 export default function AddCategoryModal(){
     return(<Dialog>
         <DialogTrigger asChild>
-            <Button variant="outline"><Plus />New</Button>
+            <Button variant="outline" className="bg-[#1E7B56] text-white"><Plus />New</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>

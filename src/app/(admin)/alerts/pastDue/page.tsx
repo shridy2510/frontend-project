@@ -1,5 +1,5 @@
-import {columns} from "@/app/(admin)/Components/tables/reports/statusReports/broken/columns";
-import {DataTable} from "@/app/(admin)/Components/tables/reports/statusReports/broken/data-table";
+import {columns} from "@/app/(admin)/Components/tables/alerts/pastDue/columns";
+import {DataTable} from "@/app/(admin)/Components/tables/alerts/pastDue/data-table";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 
 import {FileChartColumn,} from "lucide-react";
@@ -12,29 +12,30 @@ async function getData(): Promise<Payment[]> {
         {
             id: "728ed52f",
             assetTag: "43434ab",
-            serial:"abdcd123",
+            user:"son",
             assetName: "laptop",
             model: " macbook air",
-            company: "apple",
-            cost: 1000
+            checkOutDate: "1/1/2000",
+            expectedCheckInDate: "1/1/2023",
+            daysPastDue: "100"
 
         },
         {
-            id: "39fvdvdd",
-            category: "software",
-            serial:"a1fedfe23",
-            assetName: "apple Music",
-            model: "",
-            company: "apple",
-            cost: 2000
-
-        },
+            id: "728ed52sdsf",
+            assetTag: "43434ab",
+            user:"son",
+            assetName: "laptop",
+            model: " macbook air",
+            checkOutDate: "1/1/2000",
+            expectedCheckInDate: "1/1/2023",
+            daysPastDue: "100"
+        }
 
         // ...
     ]
 }
 
-export default async function BrokenStatusReportPage() {
+export default async function AlertPastDueAssetPage() {
     const data = await getData()
 
     return (
@@ -46,7 +47,7 @@ export default async function BrokenStatusReportPage() {
     <div className="ml-16 mr-24">
     <Card className="p-4">
         <CardHeader>
-            <CardTitle>Broken Assets</CardTitle>
+            <CardTitle>Past Due Assets</CardTitle>
     </CardHeader>
     <CardContent>
 

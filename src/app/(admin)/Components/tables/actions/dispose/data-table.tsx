@@ -150,9 +150,7 @@ export function DataTable<TData, TValue>({
                             <TableCell></TableCell>
                             <TableCell></TableCell>
                             <TableCell></TableCell>
-                            <TableCell className="font-bold ">
-                                {table.getRowModel().rows.reduce((total, row) => total + row.original.cost, 0).toFixed(2)}
-                            </TableCell>
+                            <TableCell></TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
