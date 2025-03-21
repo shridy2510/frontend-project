@@ -1,9 +1,13 @@
+'use client'
 import {columns} from "@/app/(admin)/Components/tables/alerts/underRepair/columns";
 import {DataTable} from "@/app/(admin)/Components/tables/alerts/underRepair/data-table";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 
-import {FileChartColumn,} from "lucide-react";
+import {FileChartColumn, Flag,} from "lucide-react";
 import AvailableStatusReportPage from "@/app/(admin)/report/status/available/page";
+import {useEffect, useState} from "react";
+import {getCheckedOutAsset, getUnderRepairedAsset} from "@/app/service/AssetService/functions";
+import {Payment} from "@/app/(admin)/Components/tables/userList/columns";
 
 
 async function getData(): Promise<Payment[]> {
@@ -31,14 +35,41 @@ async function getData(): Promise<Payment[]> {
     ]
 }
 
-export default async function AlertUnderRepairAssetPage() {
-    const data = await getData()
+export default  function AlertUnderRepairAssetPage() {
+    const [data ,setData]=useState([])
+    useEffect(()=>{
+
+        async function fetchAssetData() {
+            // Fetch data from your API here.
+            try{
+                const response= await getUnderRepairedAsset();
+                // return response.data;
+                setData(response.data)
+            }
+            catch(error){
+                console.error("Error fetching asset data:", error);
+                setData([
+                    {
+                        id: "Error",
+                        assetTag: "Error",
+                        serial: "Error",
+                        name: "Error",
+                        status: "Error",
+                        modelName: "Error",
+                        companyName: "Error",
+                        cost:"Error"
+                    }])
+            }
+
+        }
+        fetchAssetData();
+    },[])
 
     return (
         <div className="content p-8">
         <h1 className="scroll-m-20 text-3xl font-bold tracking-tight mb-6 flex items-center gap-2">
-        <FileChartColumn size={32} />
-    Report
+            <Flag size={32}  />
+            Alert
     </h1>
     <div className="ml-16 mr-24">
     <Card className="p-4">

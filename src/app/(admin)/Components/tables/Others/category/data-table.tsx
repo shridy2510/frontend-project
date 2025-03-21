@@ -27,6 +27,7 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import {Plus} from "lucide-react";
+import AddCategoryModal from "@/app/(admin)/Components/modals/category/category";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -56,7 +57,7 @@ export function DataTable<TData, TValue>({
         getFilteredRowModel: getFilteredRowModel(),
         state: {
             sorting,
-            columnFilters,
+            columnFilters,columnVisibility
         },
 
     })
@@ -75,10 +76,7 @@ export function DataTable<TData, TValue>({
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <Button className="flex bg-[#1E7B56]">
-                        <Plus size={40}/>
-                        Add New Category
-                    </Button>
+                    <AddCategoryModal/>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="outline">Columns</Button>
@@ -136,7 +134,10 @@ export function DataTable<TData, TValue>({
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>
-                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                            {cell.getValue() === null
+                                                ? "N/A"
+                                                : flexRender(cell.column.columnDef.cell, cell.getContext())
+                                            }
                                         </TableCell>
                                     ))}
                                 </TableRow>

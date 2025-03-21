@@ -1,29 +1,38 @@
-
+'use client'
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {DataTable} from "@/app/(admin)/Components/tables/Others/category/data-table";
 import {columns} from "@/app/(admin)/Components/tables/Others/category/columns";
 import {ClipboardMinus} from "lucide-react";
+import {useEffect, useState} from "react";
+import {getAvailableAsset} from "@/app/service/AssetService/functions";
+import {getCategory} from "@/app/service/categoryService/functions";
 
 
-async function getData(): Promise<Payment[]> {
-    // Fetch data from your API here.
-    return [
-        {
-            id: "728ed52f",
-            type:"Accessory",
-            name:"Accessory"
-        },
-        {
-            id: "728ed5e2f",
-            type:"License",
-            name:"License"
-        },
-        // ...
-    ]
-}
 
-export default async function CategoryPage() {
-    const data = await getData()
+export default  function CategoryPage() {
+    const [data ,setData]=useState([])
+    useEffect(()=>{
+
+        async function fetchAssetData() {
+            // Fetch data from your API here.
+            try{
+                const response= await getCategory();
+                // return response.data;
+                setData(response.data)
+            }
+            catch(error){
+                console.error("Error fetching asset data:", error);
+                setData([
+                    {
+                        id: "Error",
+                        type: "Error",
+                        name: "Error"
+                    }])
+            }
+
+        }
+        fetchAssetData();
+    },[])
 
     return (
         <div className="content p-8 ">

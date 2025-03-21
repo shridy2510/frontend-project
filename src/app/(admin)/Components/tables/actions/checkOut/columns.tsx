@@ -21,10 +21,12 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import React from "react";
+import CheckOutModal from "@/app/(admin)/Components/modals/Actions/checkout";
+import CheckOutButtonModal from "@/app/(admin)/Components/modals/Actions/checkOutButton";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Payment = {
+export type Asset = {
     id: string
     amount: number
     status: "pending" | "processing" | "success" | "failed"
@@ -32,7 +34,7 @@ export type Payment = {
 }
 
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Asset>[] = [
     {
         accessorKey: "assetTag",
         header: ({ column }) => {
@@ -48,7 +50,7 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
-        accessorKey: "assetName",
+        accessorKey: "name",
         header: ({ column }) => {
             return (
                 <Button
@@ -62,7 +64,7 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
-        accessorKey: "company",
+        accessorKey: "companyName",
         header: ({ column }) => {
             return (
                 <Button
@@ -76,7 +78,7 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
-        accessorKey: "model",
+        accessorKey: "modelName",
         header: ({ column }) => {
             return (
                 <Button
@@ -103,21 +105,46 @@ export const columns: ColumnDef<Payment>[] = [
             )
         },
     },
+    {
+        accessorKey: "status",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Status
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => {
+            const status = row.getValue("status") as string;
+
+            // Define background color classes based on status
+            const statusBgColor =
+                status === "Available"
+                    ? "bg-[#AFD5AA]" // Light green background
+                    : "bg-[#A4A8D1]"; // Default gray background
+
+            return (
+                <div className={`px-3 py-2 rounded ${statusBgColor}`}>
+                    {status}
+                </div>
+            );
+        },
+    },
 
 
     {
         accessorKey:"Actions",
         id: "actions",
         cell: ({ row }) => {
-            const payment = row.original
+            const asset = row.original
 
             return (
                 <div className="flex gap-2"> {/* Add gap between buttons */}
-                    <Button className=" border border-[#7796CB] text-[#7796CB] bg-white"
-                            onClick={() => navigator.clipboard.writeText(payment.id)}>
-                        <UserRoundCheck  />
-                        Check Out
-                    </Button>
+                    <CheckOutButtonModal id={asset.id}/>
                 </div>
             )
         },

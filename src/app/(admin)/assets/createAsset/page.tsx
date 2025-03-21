@@ -16,13 +16,18 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
+import { v4 as uuidv4 } from 'uuid';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
-import {getCompany} from "@/app/service/companyService/getCompanyName";
+import {getCompany, getCompanyName} from "@/app/service/companyService/getCompanyName";
 import {useQuery} from "@tanstack/react-query";
 
 import AddCompanyModal from "@/app/(admin)/Components/modals/company/company";
 import AddModelModal from "@/app/(admin)/Components/modals/model/model";
+import {CirclePlus} from "lucide-react";
+import {getModel} from "@/app/service/modelService/getList";
+import {createAsset} from "@/app/service/AssetService/functions";
+
 
 
 const formSchema = z.object({
@@ -33,14 +38,29 @@ const formSchema = z.object({
     assetTag: z.string().min(1, {
         message: "Asset tag is required.",
     }),
-    status: z.string().min(1, {
-        message: "Status is required.",
-    }),
-    cost: z.number(),
-    company:z.string().min(1, {
-        message: "Company is required.",
-    }),
+
+
+    cost: z.preprocess(
+        (val) => {
+            if (typeof val === "string") {
+                const trimmed = val.trim();
+                if (trimmed === "") return undefined; // Allow empty string as valid (interpreted as undefined)
+
+                const cleaned = trimmed.replace(/,/g, ""); // Remove commas from input
+                const parsed = parseFloat(cleaned);
+                return isNaN(parsed) ? NaN : parsed;
+            }
+            return val;
+        },
+        z.number({ invalid_type_error: "Cost must be a number." })
+            .positive("Cost must be positive")
+            .optional() // Make it optional so empty values are allowed
+    ),
+    model:z.string(),
+    company: z.string(),
+    status: z.string()
 });
+
 
 export default function AssetForm() {
     const { toast } = useToast();
@@ -52,8 +72,10 @@ export default function AssetForm() {
             serial: "",
             name: "",
             assetTag: "",
-            status: "",
-            cost: 0.0,
+            status: "1",
+            cost: "",
+            company: "",
+            model:""
         },
     });
 
@@ -62,39 +84,48 @@ export default function AssetForm() {
         { id: 1, status: "Available" },
         { id: 2, status: "Broken" },
         { id: 3, status: "Checked Out" },
-        { id: 4, status: "Checked In" },
-        { id: 5, status: "Disposed" },
-        { id: 6, status: "Donated" },
-        { id: 7, status: "Lost / Missing" },
-        { id: 8, status: "Leased" },
-        { id: 9, status: "Under Repair" }
-    ];
-    const companies = [
-        { id: 1, name: "Company1" },
-        { id: 2, name: "Company2" },
-
-    ];
-    const models = [
-        { id: 1, name: "Model1" },
-        { id: 2, name: "Model2" },
-
+        { id: 4, status: "Disposed" },
+        { id: 5, status: "Lost / Missing" },
+        { id: 6, status: "Under Repair" }
     ];
 
-
+    //company
     async function fetchCompanyData(){
         try{ const response= await getCompany();
-            return response.data;}
+            return response.data;
+            }
         catch(error)
         {throw error}
 
+    }
+    const [companies, setCompanies]=useState([])
+    const getCompanyList= async ()=> {
+        const data=await fetchCompanyData();
+        setCompanies(data);
+
 
     }
+    //model
+    async function fetchModelData(){
+        try{ const response= await getModel();
+            return response.data;
+        }
+        catch(error)
+        {throw error}
+
+    }
+    const [models, setModels]=useState([])
+    const getModelList= async ()=>{
+        const data= await fetchModelData();
+        setModels(data);
+    }
+
+
 
 
     const onSubmit = async (values) => {
         try {
-            // Assuming `createAsset` is defined elsewhere
-            await createAsset(values.serial, values.name, values.assetTag, values.status, values.cost);
+            await createAsset(values.serial, values.name, values.assetTag, values.status, values.cost,values.model,values.company);
             toast({
                 description: "Asset created successfully!",
                 className: "bg-foreground text-white",
@@ -111,7 +142,7 @@ export default function AssetForm() {
 
     return (
         <div className="content p-8">
-            <h1 className="scroll-m-20 text-3xl font-bold tracking-tight mb-6">Add an Asset</h1>
+            <h1 className="scroll-m-20 text-3xl font-bold tracking-tight mb-6 flex items-center gap-2 ">  <CirclePlus size={32}/> Add an Asset</h1>
             <div className="ml-16 mr-24">
                 <Card className="p-4">
                     <CardHeader>
@@ -180,12 +211,7 @@ export default function AssetForm() {
                                                         <FormLabel className="w-1/4">Cost (VND)</FormLabel>
                                                         <FormControl className="flex-1">
                                                             <Input
-                                                                {...field}
-                                                                type="number"
-                                                                step="0.01"
-                                                                min="0.00"
-                                                                placeholder="0.00"
-                                                                onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)} // Ensure the value is a number
+                                                                {...field} autoComplete="off"
                                                             />
                                                         </FormControl>
                                                     </div>
@@ -205,10 +231,10 @@ export default function AssetForm() {
                                                 <FormItem>
                                                     <div className="flex items-center space-x-2">
                                                         <FormLabel className="w-1/4">Status</FormLabel>
-                                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                        <Select onValueChange={(value) => field.onChange(value )} defaultValue={field.value}>
                                                             <FormControl className="flex-1">
                                                                 <SelectTrigger>
-                                                                    <SelectValue placeholder="Select a status" />
+                                                                    <SelectValue placeholder="Available" />
                                                                 </SelectTrigger>
                                                             </FormControl>
                                                             <SelectContent>
@@ -231,7 +257,9 @@ export default function AssetForm() {
                                                 <FormItem>
                                                     <div className="flex items-center space-x-2">
                                                         <FormLabel className="w-1/4">Company</FormLabel>
-                                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                        <Select onValueChange={field.onChange} defaultValue={field.value}
+                                                                onOpenChange={open => open && getCompanyList()}>
+
                                                             <FormControl className="flex-1">
                                                                 <SelectTrigger>
                                                                     <SelectValue placeholder="Select a company" />
@@ -254,12 +282,14 @@ export default function AssetForm() {
 
                                         <FormField
                                             control={form.control}
-                                            name="serial"
+                                            name="model"
                                             render={({ field }) => (
                                                 <FormItem>
                                                     <div className="flex items-center space-x-2">
                                                         <FormLabel className="w-1/4">Model</FormLabel>
-                                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                        <Select onValueChange={field.onChange} defaultValue={field.value}
+                                                                onOpenChange={open => open && getModelList()}
+                                                        >
                                                             <FormControl className="flex-1">
                                                                 <SelectTrigger>
                                                                     <SelectValue placeholder="Select a model" />

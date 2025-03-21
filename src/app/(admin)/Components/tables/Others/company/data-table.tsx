@@ -27,6 +27,7 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import {Plus, SquarePlus} from "lucide-react";
+import AddCompanyModalInSetUp from "@/app/(admin)/Components/modals/company/companyAddButton";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -56,7 +57,7 @@ export function DataTable<TData, TValue>({
         getFilteredRowModel: getFilteredRowModel(),
         state: {
             sorting,
-            columnFilters,
+            columnFilters,columnVisibility
         },
 
     })
@@ -65,20 +66,17 @@ export function DataTable<TData, TValue>({
             <div className="flex items-center justify-between py-4">
                 <div className="flex items-center">
                     <Input
-                        placeholder="Filter Asset Tag..."
-                        value={(table.getColumn("assetTag")?.getFilterValue() as string) ?? ""}
+                        placeholder="Filter Name..."
+                        value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
                         onChange={(event) =>
-                            table.getColumn("assetTag")?.setFilterValue(event.target.value)
+                            table.getColumn("name")?.setFilterValue(event.target.value)
                         }
                         className="max-w-sm"
                     />
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <Button className="flex bg-[#1E7B56]">
-                        <Plus size={40} />
-                        Add New Company
-                    </Button>
+                    <AddCompanyModalInSetUp/>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="outline">Columns</Button>
@@ -136,7 +134,10 @@ export function DataTable<TData, TValue>({
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>
-                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                            {cell.getValue() === null
+                                                ? "N/A"
+                                                : flexRender(cell.column.columnDef.cell, cell.getContext())
+                                            }
                                         </TableCell>
                                     ))}
                                 </TableRow>

@@ -17,14 +17,8 @@ import {
     ChartTooltip,
     ChartTooltipContent,
 } from "@/components/ui/chart"
-const chartData = [
-    { status: "Checked Out", value: 186, },
-    { status: "Available", value: 305 },
-    { status: "Broken", value: 237 },
-    { status: "Lost/Missing", value: 73 },
-    { status: "Disposed", value: 209 },
-    { status: "Under Repair", value: 214 },
-]
+import {useEffect, useState} from "react";
+import {getBarChartData} from "@/app/service/barChartService/functions";
 
 const chartConfig = {
     value: {
@@ -34,6 +28,31 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function AssetValueByStatusBarChart() {
+    const [data,setData]=useState([])
+    useEffect(()=>{
+        async function getData(){
+            try {
+                const response =await getBarChartData();
+                setData(response.data);
+            }catch (error){
+                setData([
+                    { status: "Checked Out", cost: 0, },
+                    { status: "Available", cost: 0 },
+                    { status: "Broken", cost: 0 },
+                    { status: "Lost or Missing", cost: 0 },
+                    { status: "Disposed", cost: 0 },
+                    { status: "Under Repair", cost: 0 },
+                ])
+                console.error(error)
+            }
+        }
+        getData();
+
+
+
+
+
+    },[])
     return (
         <Card>
             <CardHeader>
@@ -43,7 +62,7 @@ export function AssetValueByStatusBarChart() {
                 <ChartContainer config={chartConfig}>
                     <BarChart
                         accessibilityLayer
-                        data={chartData}
+                        data={data}
                         margin={{
                             top: 20,
                         }}
@@ -54,13 +73,13 @@ export function AssetValueByStatusBarChart() {
                             tickLine={false}
                             tickMargin={10}
                             axisLine={false}
-                            tickFormatter={(value) => value.slice(0, 15)}
+                            tickFormatter={(value) => value.slice(0, 20).replace("/", "\n/ ")}
                         />
                         <ChartTooltip
                             cursor={false}
                             content={<ChartTooltipContent hideLabel />}
                         />
-                        <Bar dataKey="value" fill="var(--color-value)" radius={8}>
+                        <Bar dataKey="cost" fill="var(--color-value)" radius={8}>
                             <LabelList
                                 position="top"
                                 offset={12}
@@ -73,6 +92,11 @@ export function AssetValueByStatusBarChart() {
                     </BarChart>
                 </ChartContainer>
             </CardContent>
+            {/*<CardFooter className="flex-col gap-2 text-sm">*/}
+            {/*    <div className="leading-none text-muted-foreground">*/}
+            {/*        Status*/}
+            {/*    </div>*/}
+            {/*</CardFooter>*/}
 
         </Card>
     )

@@ -61,7 +61,7 @@ export function NavUser({
 
 
   const logOut= async ()=>{
-    await logout;
+    await logout();
     router.push('/login')
     localStorage.removeItem("User_id")
 

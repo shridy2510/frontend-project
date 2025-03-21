@@ -1,28 +1,18 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel, DropdownMenuSeparator,
-    DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu";
+
 import {ArrowUpDown, MoreHorizontal, Pencil, Plus, Trash2} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {Checkbox} from "@/components/ui/checkbox";
 import React from "react";
+import {Asset, Category, Company} from "@/app/AssetType";
+import {deleteCategories, deleteManufacturers} from "@/app/service/action/functions/actionFunction";
+import {AlertDialogDeleteSetUp} from "@/app/(admin)/Components/AlertDialog/alertdialog";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Payment = {
-    id: string
-    amount: number
-    status: "pending" | "processing" | "success" | "failed"
-    email: string
-}
 
-export const columns: ColumnDef<Payment>[] = [
+
+export const columns: ColumnDef<Category>[] = [
     {
         id: "select",
         header: ({ table }) => (
@@ -44,6 +34,7 @@ export const columns: ColumnDef<Payment>[] = [
         ),
 
     },
+
     {
         accessorKey: "name",
         header: ({ column }) => {
@@ -59,13 +50,14 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
-        accessorKey: "url",
+        accessorKey: "address",
         header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
+                    Address
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
@@ -76,7 +68,7 @@ export const columns: ColumnDef<Payment>[] = [
         accessorKey:"Actions",
         id: "actions",
         cell: ({ row }) => {
-            const payment = row.original
+            const category = row.original
 
             return (
                 // <DropdownMenu>
@@ -89,7 +81,7 @@ export const columns: ColumnDef<Payment>[] = [
                 //     <DropdownMenuContent align="end">
                 //         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 //         <DropdownMenuItem
-                //             onClick={() => navigator.clipboard.writeText(payment.id)}
+                //             onClick={() => navigator.clipboard.writeText(asset.id)}
                 //         >
                 //             View
                 //         </DropdownMenuItem>
@@ -101,12 +93,10 @@ export const columns: ColumnDef<Payment>[] = [
                 // </DropdownMenu>
 
                 <div className="flex gap-2"> {/* Add gap between buttons */}
-                    <Button className="h-7 w-7 border border-[#7796CB] text-[#7796CB] bg-white" onClick={() => navigator.clipboard.writeText(payment.id)}>
+                    <Button className="h-7 w-7 border border-[#7796CB] text-[#7796CB] bg-white" >
                         <Pencil />
                     </Button>
-                    <Button className="h-7 w-7 border border-[#EE6352] text-[#EE6352] bg-white" onClick={() => navigator.clipboard.writeText(payment.id)}>
-                        <Trash2 />
-                    </Button>
+                    <AlertDialogDeleteSetUp onconfirm={()=>{deleteCategories(category.id)}}/>
 
                 </div>
 

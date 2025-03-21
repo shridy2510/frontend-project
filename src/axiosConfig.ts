@@ -1,3 +1,5 @@
+//client side
+
 import axios from 'axios';
 import Cookies from "js-cookie";
 axios.defaults.baseURL = `${process.env.NEXT_PUBLIC_SERVER}`

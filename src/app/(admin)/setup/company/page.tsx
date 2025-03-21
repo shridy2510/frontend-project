@@ -1,8 +1,11 @@
-
+'use client'
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {DataTable} from "@/app/(admin)/Components/tables/Others/company/data-table";
 import {columns} from "@/app/(admin)/Components/tables/Others/company/columns";
 import {BriefcaseBusiness} from "lucide-react";
+import {useEffect, useState} from "react";
+import {getAvailableAsset} from "@/app/service/AssetService/functions";
+import {getCompany} from "@/app/service/companyService/getCompanyName";
 
 
 async function getData(): Promise<Payment[]> {
@@ -22,8 +25,31 @@ async function getData(): Promise<Payment[]> {
     ]
 }
 
-export default async function CompanyPage() {
-    const data = await getData()
+export default  function CompanyPage() {
+    const [data ,setData]=useState([])
+    useEffect(()=>{
+
+        async function fetchAssetData() {
+            // Fetch data from your API here.
+            try{
+                const response= await getCompany();
+                // return response.data;
+                setData(response.data)
+            }
+            catch(error){
+                console.error("Error fetching asset data:", error);
+                setData([
+                    {
+                        id: "Error",
+                        address: "Error",
+                        name: "Error",
+
+                    }])
+            }
+
+        }
+        fetchAssetData();
+    },[])
 
     return (
         <div className="content p-8">

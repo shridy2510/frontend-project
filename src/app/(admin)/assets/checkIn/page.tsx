@@ -1,9 +1,11 @@
+'use client'
 import {columns} from "@/app/(admin)/Components/tables/actions/checkIn/columns";
 import {DataTable} from "@/app/(admin)/Components/tables/actions/checkIn/data-table";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 
 import {FileChartColumn, UserRoundMinus,} from "lucide-react";
-import React from "react";
+import React, {useEffect, useState} from "react";
+import {getAsset, getCheckedOutAsset} from "@/app/service/AssetService/functions";
 
 
 async function getData(): Promise<Payment[]> {
@@ -17,25 +19,40 @@ async function getData(): Promise<Payment[]> {
             model: " macbook air",
             company: "apple",
             cost: 1000
-
-        },
-        {
-            id: "39fvdvdd",
-            category: "software",
-            serial:"a1fedfe23",
-            assetName: "apple Music",
-            model: "",
-            company: "apple",
-            cost: 2000
-
         },
 
-        // ...
     ]
 }
 
-export default async function AvailableStatusReportPage() {
-    const data = await getData()
+export default function CheckedOutStatusReportPage() {
+    const [data ,setData]=useState([])
+    useEffect(()=>{
+
+        async function fetchAssetData() {
+            // Fetch data from your API here.
+            try{
+                const response= await getCheckedOutAsset();
+                // return response.data;
+                setData(response.data)
+            }
+            catch(error){
+                console.error("Error fetching asset data:", error);
+                setData([
+                    {
+                        id: "Error",
+                        assetTag: "Error",
+                        serial: "Error",
+                        name: "Error",
+                        status: "Error",
+                        modelName: "Error",
+                        companyName: "Error",
+                        cost:"Error"
+                    }])
+            }
+
+        }
+        fetchAssetData();
+    },[])
 
     return (
         <div className="content p-8">
@@ -46,7 +63,7 @@ export default async function AvailableStatusReportPage() {
     <div className="ml-16 mr-24">
     <Card className="p-4">
         <CardHeader>
-            <CardTitle>Available Assets</CardTitle>
+            <CardTitle>Checked Out Assets</CardTitle>
     </CardHeader>
     <CardContent>
 

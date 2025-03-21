@@ -21,18 +21,22 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import React from "react";
+import {Asset} from "@/app/AssetType";
+import {
+    AlertDialogAvailable, AlertDialogBroken,
+    AlertDialogDelete,
+    AlertDialogDisposed
+} from "@/app/(admin)/Components/AlertDialog/alertdialog";
+import {broken, deleteAsset, dispose, makeAvailable} from "@/app/service/action/functions/actionFunction";
+import ViewAssetModal from "@/app/(admin)/Components/modals/asset/assetModal";
+import EditAssetModal from "@/app/(admin)/Components/modals/asset/editAssetModal";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Payment = {
-    id: string
-    amount: number
-    status: "pending" | "processing" | "success" | "failed"
-    email: string
-}
 
 
-export const columns: ColumnDef<Payment>[] = [
+
+export const columns: ColumnDef<Asset>[] = [
     {
         accessorKey: "assetTag",
         header: ({ column }) => {
@@ -48,7 +52,7 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
-        accessorKey: "assetName",
+        accessorKey: "name",
         header: ({ column }) => {
             return (
                 <Button
@@ -62,7 +66,7 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
-        accessorKey: "company",
+        accessorKey: "companyName",
         header: ({ column }) => {
             return (
                 <Button
@@ -76,7 +80,7 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
-        accessorKey: "model",
+        accessorKey: "modelName",
         header: ({ column }) => {
             return (
                 <Button
@@ -104,10 +108,39 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
+        accessorKey: "status",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Status
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => {
+            const status = row.getValue("status") as string;
+
+            // Define background color classes based on status
+            const statusBgColor =
+                status === "Available"
+                    ? "bg-[#AFD5AA]" // Light green background
+                    : "bg-[#A4A8D1]"; // Default gray background
+
+            return (
+                <div className={`px-3 py-2 rounded ${statusBgColor}`}>
+                    {status}
+                </div>
+            );
+        },
+    },
+    {
         accessorKey:"Actions",
         id: "actions",
         cell: ({ row }) => {
-            const payment = row.original
+            const asset = row.original
 
             return (
                 <DropdownMenu>
@@ -121,31 +154,28 @@ export const columns: ColumnDef<Payment>[] = [
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuSeparator/>
                         <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(payment.id)}
+                            onSelect={(e) => e.preventDefault()}
                         >
-                            <Eye color="#0A0A0A" />
-                            View
+                            <ViewAssetModal id={asset.id}/>
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <Pencil color="#7796CB"/>
-                            Edit
+                         <DropdownMenuItem  onSelect={(e) => e.preventDefault() }>
+                            <EditAssetModal id={asset.id}/>
                         </DropdownMenuItem>
 
-                        <DropdownMenuItem>
-                            <Trash2 color="#EE6352"/>
-                            Delete
+                        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                            <AlertDialogDelete onconfirm={()=>deleteAsset(asset.id)}/>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator/>
                         <DropdownMenuSeparator/>
-                        <DropdownMenuItem>
-                            <Trash></Trash>
-                            Dispose </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <ShieldAlert />
-                            Broken </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <Check />
-                            Make Available </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                            <AlertDialogDisposed onconfirm={()=>dispose(asset.id)}/>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                            <AlertDialogBroken onconfirm={()=>broken(asset.id)}/>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                            <AlertDialogAvailable onconfirm={()=>makeAvailable(asset.id)}/>
+                        </DropdownMenuItem>
 
                         <DropdownMenuSeparator />
 

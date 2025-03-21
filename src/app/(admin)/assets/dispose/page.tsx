@@ -1,10 +1,12 @@
+'use client'
 import {columns} from "@/app/(admin)/Components/tables/actions/dispose/columns";
 import {DataTable} from "@/app/(admin)/Components/tables/actions/dispose/data-table";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 
 import {FileChartColumn, Trash,} from "lucide-react";
-import React from "react";
-
+import React, {useEffect, useState} from "react";
+import {getAsset, getCheckedOutAsset, getDisposedAsset} from "@/app/service/AssetService/functions";
+import {Payment} from "@/app/(admin)/Components/tables/userList/columns";
 
 async function getData(): Promise<Payment[]> {
     // Fetch data from your API here.
@@ -34,8 +36,37 @@ async function getData(): Promise<Payment[]> {
     ]
 }
 
-export default async function AvailableStatusReportPage() {
-    const data = await getData()
+export default function AllStatusReportPage() {
+    const [data ,setData]=useState([])
+    useEffect(()=>{
+
+        async function fetchAssetData() {
+            // Fetch data from your API here.
+            try{
+                const response= await getAsset();
+                const filterAsset = response.data.filter(asset => asset.status !== "Disposed");
+                // return response.data;
+                setData(filterAsset)
+
+            }
+            catch(error){
+                console.error("Error fetching asset data:", error);
+                setData([
+                    {
+                        id: "Error",
+                        assetTag: "Error",
+                        serial: "Error",
+                        name: "Error",
+                        status: "Error",
+                        modelName: "Error",
+                        companyName: "Error",
+                        cost:"Error"
+                    }])
+            }
+
+        }
+        fetchAssetData();
+    },[])
 
     return (
         <div className="content p-8">

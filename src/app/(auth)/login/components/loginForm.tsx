@@ -62,7 +62,7 @@ export default function LoginForm(){
             localStorage.setItem("User_id",responseUser.data.userId)
 
             if(responseUser.data.roles.includes("Admin")){router.push('/dashboard');}
-            else{router.push('/userPage');}
+            else{router.push('/Dashboard/id');}
 
 
 

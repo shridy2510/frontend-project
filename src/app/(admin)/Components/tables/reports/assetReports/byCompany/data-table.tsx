@@ -55,7 +55,7 @@ export function DataTable<TData, TValue>({
         getFilteredRowModel: getFilteredRowModel(),
         state: {
             sorting,
-            columnFilters,
+            columnFilters,columnVisibility
         },
 
     })
@@ -65,9 +65,9 @@ export function DataTable<TData, TValue>({
                 <div className="flex items-center py-4">
                     <Input
                         placeholder="Filter Company..."
-                        value={(table.getColumn("company")?.getFilterValue() as string) ?? ""}
+                        value={(table.getColumn("companyName")?.getFilterValue() as string) ?? ""}
                         onChange={(event) =>
-                            table.getColumn("company")?.setFilterValue(event.target.value)
+                            table.getColumn("companyName")?.setFilterValue(event.target.value)
                         }
                         className="max-w-sm"
                     />
@@ -129,7 +129,10 @@ export function DataTable<TData, TValue>({
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>
-                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                            {cell.getValue() === null
+                                                ? "N/A"
+                                                : flexRender(cell.column.columnDef.cell, cell.getContext())
+                                            }
                                         </TableCell>
                                     ))}
                                 </TableRow>

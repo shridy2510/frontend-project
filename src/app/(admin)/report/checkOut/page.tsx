@@ -1,8 +1,11 @@
+'use client'
 import {columns} from "@/app/(admin)/Components/tables/reports/checkOutReport/columns";
 import {DataTable} from "@/app/(admin)/Components/tables/reports/checkOutReport/data-table";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 
 import {FileChartColumn,} from "lucide-react";
+import {useEffect, useState} from "react";
+import {getAsset, getCheckedOutAsset} from "@/app/service/AssetService/functions";
 
 
 async function getData(): Promise<Payment[]> {
@@ -35,8 +38,35 @@ async function getData(): Promise<Payment[]> {
     ]
 }
 
-export default async function CheckOutReportPage() {
-    const data = await getData()
+export default  function CheckOutReportPage() {
+    const [data ,setData]=useState([])
+    useEffect(()=>{
+
+        async function fetchAssetData() {
+            // Fetch data from your API here.
+            try{
+                const response= await getCheckedOutAsset();
+                // return response.data;
+                setData(response.data)
+            }
+            catch(error){
+                console.error("Error fetching asset data:", error);
+                setData([
+                    {
+                        id: "Error",
+                        assetTag: "Error",
+                        serial: "Error",
+                        name: "Error",
+                        status: "Error",
+                        modelName: "Error",
+                        companyName: "Error",
+                        cost:"Error"
+                    }])
+            }
+
+        }
+        fetchAssetData();
+    },[])
 
     return (
         <div className="content p-8">

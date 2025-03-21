@@ -28,12 +28,45 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import {Badge} from "@/components/ui/badge";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {count} from "d3-array";
+import {getTotalAssetAlerts} from "@/app/service/AssetService/countAndValue";
 export function NavMain() {
 
   const [isReportsOpen, setIsReportsOpen] = useState(false);
   const [isAssetReportsOpen, setIsAssetReportsOpen] = useState(false);
   const [isStatusReportsOpen,setIsStatusReportsOpen]= useState(false);
+  const [countPassDueAsset,setCountPassDueAsset]=useState(0);
+  const [countUnderRepairAsset,setCountUnderRepairAsset]=useState(0);
+  const [countLostMissingAsset,setCountLossMissingAsset]=useState(0);
+  const [countBrokenAsset,setBrokenAsset]=useState(0);
+  const [countTotal,setCountTotal]=useState(0)
+  useEffect(()=>{
+    async function getData(){
+
+      try {
+        const response =await getTotalAssetAlerts();
+        setCountPassDueAsset(response.data[0]);
+        setCountUnderRepairAsset(response.data[1]);
+        setBrokenAsset(response.data[2]);
+        setCountLossMissingAsset(response.data[3]);
+        setCountTotal(response.data[4]);
+
+      }catch(error){
+        console.error("ok",error)
+
+      }
+
+    }
+    getData();
+
+
+  },[])
+
+
+
+
+
   return (
       <SidebarGroup>
         <SidebarGroupLabel>Platform</SidebarGroupLabel>
@@ -45,7 +78,7 @@ export function NavMain() {
                 <SidebarMenuButton>
                   <Flag />
                   <span>Alerts</span>
-                  <Badge className="ml-auto" variant="destructive">10</Badge>
+                  <Badge className="ml-auto" variant="destructive">{countTotal}</Badge>
                   <ChevronRight className=" transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                 </SidebarMenuButton>
               </CollapsibleTrigger>
@@ -58,7 +91,7 @@ export function NavMain() {
 
 
                       </a>
-                      <Badge className="ml-auto" variant="destructive">1</Badge>
+                      <Badge className="ml-auto" variant="destructive">{countPassDueAsset}</Badge>
 
                     </SidebarMenuSubButton>
                   </SidebarMenuSubItem>
@@ -67,7 +100,7 @@ export function NavMain() {
                       <a href="/alerts/underRepair">
                         <span>Under Repair</span>
                       </a>
-                      <Badge className="ml-auto" variant="destructive">2</Badge>
+                      <Badge className="ml-auto" variant="destructive">{countUnderRepairAsset}</Badge>
                     </SidebarMenuSubButton>
                   </SidebarMenuSubItem>
                   <SidebarMenuSubItem key="subtitle3">
@@ -75,7 +108,7 @@ export function NavMain() {
                       <a href="/alerts/broken">
                         <span>Broken</span>
                       </a>
-                      <Badge className="ml-auto" variant="destructive">3</Badge>
+                      <Badge className="ml-auto" variant="destructive">{countBrokenAsset}</Badge>
                     </SidebarMenuSubButton>
                   </SidebarMenuSubItem>
                   <SidebarMenuSubItem key="subtitle4">
@@ -84,7 +117,7 @@ export function NavMain() {
                         <span>Lost/Missing</span>
 
                       </a>
-                      <Badge className="ml-auto" variant="destructive">4</Badge>
+                      <Badge className="ml-auto" variant="destructive">{countLostMissingAsset}</Badge>
                     </SidebarMenuSubButton>
                   </SidebarMenuSubItem>
                 </SidebarMenuSub>

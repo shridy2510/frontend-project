@@ -1,8 +1,11 @@
-
+'use client'
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {DataTable} from "@/app/(admin)/Components/tables/Others/manufacturer/data-table";
 import {columns} from "@/app/(admin)/Components/tables/Others/manufacturer/columns";
 import {Factory} from "lucide-react";
+import {useEffect, useState} from "react";
+import {getAvailableAsset} from "@/app/service/AssetService/functions";
+import {getManufacturer} from "@/app/service/manufacturerService/functions";
 
 
 async function getData(): Promise<Payment[]> {
@@ -22,8 +25,30 @@ async function getData(): Promise<Payment[]> {
     ]
 }
 
-export default async function ManufactuterPage() {
-    const data = await getData()
+export default  function ManufactuterPage() {
+    const [data ,setData]=useState([])
+    useEffect(()=>{
+
+        async function fetchAssetData() {
+            // Fetch data from your API here.
+            try{
+                const response= await getManufacturer();
+                // return response.data;
+                setData(response.data)
+            }
+            catch(error){
+                console.error("Error fetching asset data:", error);
+                setData([
+                    {
+                        id: "Error",
+                        url: "Error",
+                        name: "Error"
+                    }])
+            }
+
+        }
+        fetchAssetData();
+    },[])
 
     return (
         <div className="content p-8">

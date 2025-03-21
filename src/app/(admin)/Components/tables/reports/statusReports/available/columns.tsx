@@ -21,18 +21,12 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import React from "react";
-
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Payment = {
-    id: string
-    amount: number
-    status: "pending" | "processing" | "success" | "failed"
-    email: string
-}
+import {Asset} from "@/app/AssetType";
 
 
-export const columns: ColumnDef<Payment>[] = [
+
+
+export const columns: ColumnDef<Asset>[] = [
     {
         accessorKey: "assetTag",
         header: ({ column }) => {
@@ -48,7 +42,7 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
-        accessorKey: "assetName",
+        accessorKey: "name",
         header: ({ column }) => {
             return (
                 <Button
@@ -62,7 +56,7 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
-        accessorKey: "company",
+        accessorKey: "companyName",
         header: ({ column }) => {
             return (
                 <Button
@@ -76,7 +70,7 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
-        accessorKey: "model",
+        accessorKey: "modelName",
         header: ({ column }) => {
             return (
                 <Button

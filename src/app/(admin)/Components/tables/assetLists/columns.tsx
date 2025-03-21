@@ -22,17 +22,27 @@ import {
 import {Button} from "@/components/ui/button";
 import {Checkbox} from "@/components/ui/checkbox";
 import React from "react";
+import {Asset} from "@/app/AssetType";
+import {
+    AlertDialogAvailable,
+    AlertDialogBroken, AlertDialogCheckIn,
+    AlertDialogDelete, AlertDialogDisposed,
+    AlertDialogLostMissing,
+    AlertDialogUnderRepair
+} from "@/app/(admin)/Components/AlertDialog/alertdialog";
+import {
+    broken,
+    checkIn,
+    deleteAsset,
+    dispose,
+    lostMissing, makeAvailable,
+    repair
+} from "@/app/service/action/functions/actionFunction";
+import CheckOutModal from "@/app/(admin)/Components/modals/Actions/checkout";
+import ViewAssetModal from "@/app/(admin)/Components/modals/asset/assetModal";
+import EditAssetModal from "@/app/(admin)/Components/modals/asset/editAssetModal";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Payment = {
-    id: string
-    amount: number
-    status: "pending" | "processing" | "success" | "failed"
-    email: string
-}
-
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Asset>[] = [
     {
         id: "select",
         header: ({ table }) => (
@@ -69,7 +79,7 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
-        accessorKey: "assetName",
+        accessorKey: "name",
         header: ({ column }) => {
             return (
                 <Button
@@ -97,7 +107,7 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
-        accessorKey: "model",
+        accessorKey: "modelName",
         header: ({ column }) => {
             return (
                 <Button
@@ -111,7 +121,7 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
-        accessorKey: "company",
+        accessorKey: "companyName",
         header: ({ column }) => {
             return (
                 <Button
@@ -137,13 +147,29 @@ export const columns: ColumnDef<Payment>[] = [
                 </Button>
             )
         },
+        cell: ({ row }) => {
+            const status = row.getValue("status") as string;
+
+            // Define background color classes based on status
+            const statusBgColor =
+                status === "Available"
+                    ? "bg-[#AFD5AA]" // Light green background
+                            : "bg-[#A4A8D1]"; // Default gray background
+
+            return (
+                <div className={`px-3 py-2 rounded ${statusBgColor}`}>
+                    {status}
+                </div>
+            );
+        },
     },
 
     {
         accessorKey:"Actions",
         id: "actions",
         cell: ({ row }) => {
-            const payment = row.original
+            const asset = row.original;
+            const status = row.getValue("status");
 
             return (
                 <DropdownMenu>
@@ -157,42 +183,111 @@ export const columns: ColumnDef<Payment>[] = [
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuSeparator/>
                         <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(payment.id)}
+                            onSelect={(e) => e.preventDefault()}
                         >
-                            <Eye color="#0A0A0A" />
-                            View
+                            <ViewAssetModal id={asset.id}/>
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <Pencil color="#7796CB"/>
-                            Edit
+                        <DropdownMenuItem  onSelect={(e) => e.preventDefault() }>
+                            <EditAssetModal id={asset.id}/>
                         </DropdownMenuItem>
-
-                        <DropdownMenuItem>
-                            <Trash2 color="#EE6352"/>
-                            Delete
+                        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                            <AlertDialogDelete onconfirm={()=>deleteAsset(asset.id)}/>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator/>
-                        <DropdownMenuItem>
-                            <UserRoundCheck  />
-                            Check Out </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <UserRoundMinus />
-                            Check In</DropdownMenuItem>
-                        <DropdownMenuSeparator/>
-                        <DropdownMenuItem>
-                            <ShieldAlert />
-                            Broken </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <Trash></Trash>
-                            Dispose </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <MapPinOff />
-                            Lost/Missing </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <Wrench />
-                            Repair </DropdownMenuItem>
 
-                        <DropdownMenuSeparator />
+
+                        {status === "Available" && (
+                            <>
+                                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                    <CheckOutModal id={asset.id}/>
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                    <AlertDialogBroken onconfirm={() => broken(asset.id)} />
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                    <AlertDialogDisposed onconfirm={() => dispose(asset.id)} />
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                    <AlertDialogLostMissing onconfirm={() => lostMissing(asset.id)} />
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                            </>
+                        )}
+
+
+                        {status === "Disposed" && (
+                            <>
+                                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                    <AlertDialogAvailable onconfirm={() => makeAvailable(asset.id)} />
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                            </>
+                        )}
+
+                        {status === "Under Repair" && (
+                            <>
+                                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                    <AlertDialogDisposed onconfirm={() => dispose(asset.id)} />
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                    <AlertDialogLostMissing onconfirm={() => lostMissing(asset.id)} />
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                    <AlertDialogAvailable onconfirm={()=>makeAvailable(asset.id)}/>
+                                </DropdownMenuItem>
+
+                                <DropdownMenuSeparator />
+                            </>
+                        )}
+                        {status === "Lost or Missing" && (
+                            <>
+                                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                    <AlertDialogDisposed onconfirm={() => dispose(asset.id)} />
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                    <AlertDialogBroken onconfirm={()=>broken(asset.id)}/>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                    <AlertDialogAvailable onconfirm={() => makeAvailable(asset.id)} />
+                                </DropdownMenuItem>
+
+                                <DropdownMenuSeparator />
+                            </>
+                        )}
+                        {status === "Checked Out" && (
+                            <>
+                                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                    <AlertDialogCheckIn onconfirm={()=>checkIn(asset.id)}/>
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                    <AlertDialogBroken onconfirm={()=>broken(asset.id)}/>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                    <AlertDialogDisposed onconfirm={()=>dispose(asset.id)}/>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                    <AlertDialogLostMissing onconfirm={()=>lostMissing(asset.id)}/>
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                            </>
+                        )}
+                        {status === "Broken" && (
+                            <>
+                                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                    <AlertDialogDisposed onconfirm={()=>dispose(asset.id)}/>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                    <AlertDialogUnderRepair onconfirm={() => repair(asset.id)} />
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                    <AlertDialogAvailable onconfirm={() => makeAvailable(asset.id)} />
+                                </DropdownMenuItem>
+
+                                <DropdownMenuSeparator />
+                            </>
+                        )}
 
                     </DropdownMenuContent>
                 </DropdownMenu>

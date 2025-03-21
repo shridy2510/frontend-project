@@ -4,18 +4,9 @@ import { ColumnDef } from "@tanstack/react-table"
 import {ArrowUpDown, MoreHorizontal} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {Checkbox} from "@/components/ui/checkbox";
+import {Asset} from "@/app/AssetType";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Payment = {
-    id: string
-    amount: number
-    status: "pending" | "processing" | "success" | "failed"
-    email: string
-}
-
-
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Asset>[] = [
     {
         accessorKey: "assetTag",
         header: ({ column }) => {
@@ -31,7 +22,7 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
-        accessorKey: "assetName",
+        accessorKey: "name",
         header: ({ column }) => {
             return (
                 <Button
@@ -45,7 +36,7 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
-        accessorKey: "company",
+        accessorKey: "companyName",
         header: ({ column }) => {
             return (
                 <Button
@@ -59,7 +50,7 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
-        accessorKey: "model",
+        accessorKey: "modelName",
         header: ({ column }) => {
             return (
                 <Button

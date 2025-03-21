@@ -1,36 +1,45 @@
-import {columns} from "@/app/(admin)/Components/tables/assetLists/columns";
+'use client'
+import {Asset, columns} from "@/app/(admin)/Components/tables/assetLists/columns";
 import {DataTable} from "@/app/(admin)/Components/tables/assetLists/data-table";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {List} from "lucide-react";
 
+import {getAsset} from "@/app/service/AssetService/functions";
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
+import {useEffect, useState} from "react";
 
-async function getData(): Promise<Payment[]> {
-    // Fetch data from your API here.
-    return [
-        {
-            id: "728ed52f",
-            assetTag: "OK123",
-            serial: "abdcd123",
-            assetName: "Laptop",
-            status: "Broken",
-            model: "Macbook Air",
-            company: "VinSmart"
-        },
-        {
-            id: "39fvdvdd",
-            assetTag: "OK121",
-            serial: "a1fedfe23",
-            assetName: "Laptop",
-            status: "Checked Out",
-            model: "Macbook Pro",
-            company: "VinSmart"
+
+
+export default  function AssetListPage() {
+    const [data ,setData]=useState([])
+    useEffect(()=>{
+
+        async function fetchAssetData() {
+            // Fetch data from your API here.
+            try{
+                const response= await getAsset();
+                // return response.data;
+                setData(response.data)
+            }
+            catch(error){
+                console.error("Error fetching asset data:", error);
+                setData([
+                    {
+                        id: "Error",
+                        assetTag: "Error",
+                        serial: "Error",
+                        name: "Error",
+                        status: "Error",
+                        modelName: "Error",
+                        companyName: "Error"
+                    }])
+            }
+
         }
+        fetchAssetData();
+    },[])
 
-    ]
-}
-
-export default async function AssetListPage() {
-    const data = await getData()
 
     return (
         <div className="content p-8">

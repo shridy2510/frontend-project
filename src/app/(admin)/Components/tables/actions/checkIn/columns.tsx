@@ -21,18 +21,17 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import React from "react";
+import {Asset} from "@/app/AssetType";
+import {AlertDialogCheckIn} from "@/app/(admin)/Components/AlertDialog/alertdialog";
+import {checkIn} from "@/app/service/action/functions/actionFunction";
+import EditAssetModal from "@/app/(admin)/Components/modals/asset/editAssetModal";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Payment = {
-    id: string
-    amount: number
-    status: "pending" | "processing" | "success" | "failed"
-    email: string
-}
 
 
-export const columns: ColumnDef<Payment>[] = [
+
+export const columns: ColumnDef<Asset>[] = [
     {
         accessorKey: "assetTag",
         header: ({ column }) => {
@@ -48,7 +47,7 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
-        accessorKey: "assetName",
+        accessorKey: "name",
         header: ({ column }) => {
             return (
                 <Button
@@ -61,22 +60,9 @@ export const columns: ColumnDef<Payment>[] = [
             )
         },
     },
+
     {
-        accessorKey: "company",
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Company
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
-    },
-    {
-        accessorKey: "model",
+        accessorKey: "modelName",
         header: ({ column }) => {
             return (
                 <Button
@@ -90,47 +76,88 @@ export const columns: ColumnDef<Payment>[] = [
         },
     },
     {
-        accessorKey: "serial",
+        accessorKey: "lastCheckout",
         header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Serial
+                    Check-out Date
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
         },
     },
-
-
     {
-        accessorKey: "cost",
+        accessorKey: "expectedCheckin",
         header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Cost
+                    Expected Check-in Date
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
         },
     },
+    {
+        accessorKey: "assignedUserName",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Checked out to
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+    },
+    {
+        accessorKey: "status",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Status
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => {
+            const status = row.getValue("status") as string;
+
+            // Define background color classes based on status
+            const statusBgColor =
+                status === "Available"
+                    ? "bg-[#AFD5AA]" // Light green background
+                    : "bg-[#A4A8D1]"; // Default gray background
+
+            return (
+                <div className={`px-3 py-2 rounded ${statusBgColor}`}>
+                    {status}
+                </div>
+            );
+        },
+    },
+
+
     {
         accessorKey:"Actions",
         id: "actions",
         cell: ({ row }) => {
-            const payment = row.original
+            const asset = row.original
 
             return (
                 <div className="flex gap-2"> {/* Add gap between buttons */}
-                    <Button className=" border border-[#7796CB] text-[#7796CB] bg-white"
-                            onClick={() => navigator.clipboard.writeText(payment.id)}>
-                        <UserRoundMinus />
-                        Check In
+                    <Button className=" border border-[#7796CB] text-[#7796CB] bg-white">
+                        <AlertDialogCheckIn onconfirm={()=>checkIn(asset.id)}/>
                     </Button>
                 </div>
             )

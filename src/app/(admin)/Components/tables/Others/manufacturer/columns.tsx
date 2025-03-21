@@ -12,17 +12,12 @@ import {ArrowUpDown, MoreHorizontal, Pencil, Trash2} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {Checkbox} from "@/components/ui/checkbox";
 import React from "react";
+import {Asset, Manufacturer} from "@/app/AssetType";
+import {deleteCategories, deleteManufacturers} from "@/app/service/action/functions/actionFunction";
+import {AlertDialogDeleteSetUp} from "@/app/(admin)/Components/AlertDialog/alertdialog";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Payment = {
-    id: string
-    amount: number
-    name: "pending" | "processing" | "success" | "failed"
-    email: string
-}
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Manufacturer>[] = [
     {
         id: "select",
         header: ({ table }) => (
@@ -77,18 +72,15 @@ export const columns: ColumnDef<Payment>[] = [
         accessorKey:"Actions",
         id: "actions",
         cell: ({ row }) => {
-            const payment = row.original
+            const manufacturer = row.original
 
             return (
                 <div className="flex gap-2"> {/* Add gap between buttons */}
                     <Button className="h-7 w-7 border border-[#7796CB] text-[#7796CB] bg-white"
-                            onClick={() => navigator.clipboard.writeText(payment.id)}>
+                            onClick={() => navigator.clipboard.writeText(manufacturer.id)}>
                         <Pencil/>
                     </Button>
-                    <Button className="h-7 w-7 border border-[#EE6352] text-[#EE6352] bg-white"
-                            onClick={() => navigator.clipboard.writeText(payment.id)}>
-                        <Trash2/>
-                    </Button>
+                    <AlertDialogDeleteSetUp onconfirm={()=>{deleteManufacturers(manufacturer.id)}}/>
 
                 </div>
             )

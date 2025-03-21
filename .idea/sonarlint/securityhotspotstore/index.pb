@@ -264,7 +264,126 @@ p
 @src/app/(admin)/Components/tables/actions/dispose/data-table.tsx,4/3/43d6e44fb1a3ea0cd1081fa4907c6af5a5fea78a
 q
 Asrc/app/(admin)/Components/charts/barChart/assetValueByStatus.tsx,5/3/53e6318f0895e5b210861b4d489d292b567265fe
-s
-Csrc/app/(admin)/Components/charts/pieChart/assetValueByCategory.tsx,9/c/9c4606d96aabd8fd871fca128f22536c6cdd4495
 F
 public/assets/ITAM.svg,2/f/2f8e07a4cf8e9ba37ce6fc6fccbb354466d709ee
+W
+'src/app/service/modelService/getList.ts,3/a/3a21cbe68f6e037dc373a68786e8ce7487cf9392
+Y
+)src/app/service/AssetService/functions.ts,5/5/5513924a938b64eab62da6f004432f17a3922c7f
+\
+,src/app/service/categoryService/functions.ts,b/7/b715c28dcff90c3fcbae9d5da78d2027c48e8d5d
+`
+0src/app/service/manufacturerService/functions.ts,8/0/80725f6a32a17e7476b8374b8d2bfce984826fa4
+H
+src/axiosServerConfig.ts,7/d/7d9e9b8f10754e39bf8d39ad0b3e2fbcc7f56420
+]
+-src/app/service/AssetService/countAndValue.ts,8/0/80dcbf54edf897ced80a10e57cf7aa5a384d89e5
+\
+,src/app/service/userService/countAndValue.ts,8/2/82566c2474ebf6197c0d88711a0822de86553b9f
+\
+,src/app/service/barChartService/functions.ts,4/b/4bc3b760526f4c862eee91c7505823f40de87954
+\
+,src/app/service/pieChartService/functions.ts,c/e/ce7d696684d5df186b824bb1b065d3e32c53dd33
+R
+"src/app/service/action/checkout.ts,d/d/dd1f4bd904ee4e5ae362b8b3171e0fea28423476
+Q
+!src/app/service/action/checkin.ts,a/e/aedac9dd404550e63597e54ff7ac5e8374b963db
+P
+ src/app/service/action/broken.ts,4/5/45cc5f80eafcc380d24d27736c9f980441620390
+R
+"src/app/service/action/lostMiss.ts,1/e/1e26740b72d74b3b5e0f006d9435af0b0bf54e90
+Q
+!src/app/service/action/dispose.ts,9/f/9f9827de63fadbf50da7674b32bb7a35ed7cfc66
+P
+ src/app/service/action/repair.ts,8/3/832e377cca72c5d09c886b0c83cb772796c77caf
+q
+Asrc/app/(admin)/Components/charts/pieChart/assetTotalByStatus.tsx,d/c/dc6d82898490bdcf8db354cd12ec3929cc546d14
+S
+#src/app/service/action/available.ts,1/c/1cb5bc1a24831e3e50b21fb42cb5648446bb3d0d
+f
+6src/app/(admin)/Components/AlertDialog/alertdialog.tsx,4/1/410c9dc9433f2630405a0223ad4ed8fa5050659e
+D
+src/app/AssetType.ts,c/0/c05e3dc98e2fcfffe35d5272badc7f44ec2b1d99
+b
+2src/app/service/action/functions/actionFunction.ts,9/4/9499025f637b3ad857af57d718dec4ac25a34745
+P
+ src/app/service/action/delete.ts,5/9/59a6add1dd260cddbc075981898054bc002ae7d7
+f
+6src/app/(admin)/Components/modals/Actions/checkout.tsx,d/1/d1fac67f52f47a8b0136d3ba8e6804aa89047286
+M
+src/components/ui/popover.tsx,b/0/b0c0d35189581fccd87bd4d075e41a8d88f9490e
+Z
+*src/components/PopoverContentNonPortal.tsx,9/4/9444ee3f2c1f59e349b536bbf17061e9ea45c924
+L
+src/components/ui/dialog.tsx,6/b/6bb7fd7c50f117936d54a7fbf1e926cf58a1bcfa
+>
+.eslintrc.json,7/1/71c20a341bfe32aa5cd5b4384e94f942bab6a7d3
+L
+src/components/ui/select.tsx,d/5/d5ffb6ee929e1cdbd7f663707701a3558d521d95
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
+l
+<src/app/(admin)/Components/modals/Actions/checkOutButton.tsx,2/9/29c15502d43745be0e6ff2d21bbc9fd7c56d049b
+f
+6src/app/(admin)/Components/modals/asset/assetModal.tsx,c/4/c440598462cc091e7aaf391d75c3f15e6419601b
+n
+>src/app/(admin)/Components/modals/company/companyAddButton.tsx,c/5/c5a13afd37e8f770c1648c201c9cd38566232aec
+j
+:src/app/(admin)/Components/modals/model/modelAddButton.tsx,c/b/cba9da4b1010dd7c9f146415b0a99fd6a1ab283e
+j
+:src/app/(admin)/Components/modals/asset/editAssetModal.tsx,9/d/9db251d29a71f8bd5963b7c286d55ec36344bd02
+p
+@src/app/(admin)/Components/modals/asset/editAssetModalButton.tsx,1/1/1122c91b451fc01449ea39cf8353e224609d5502
+g
+7src/app/(public)/Components/AlertDialog/alertdialog.tsx,5/3/53f9737650cca57b2fe53807c352db33e97b1706
+r
+Bsrc/app/(public)/Components/charts/barChart/assetValueByStatus.tsx,c/d/cd6590b28cad516248f2c50c476064cff5f7e3c6
+]
+-src/app/(public)/Components/header/header.tsx,b/a/bac10437ecbf32662a14f73f5a47a4d7f0f71447
+c
+3src/app/(public)/Components/sidebar/app-sidebar.tsx,7/d/7df3637e1a4b08ed701f7ab66d6efc13a53ceef8
+`
+0src/app/(public)/Components/sidebar/nav-main.tsx,a/f/af934eb9a9ca2ff80d2755525291a4158163a1d7
+`
+0src/app/(public)/Components/sidebar/nav-user.tsx,8/4/84ab3ba2748b5fa00ed0b53e8fa4a77d4644ff4b
+K
+src/app/(public)/layout.tsx,c/a/ca2b5b174ec2857ca568e4a48cc47b39c708f4b9
+Z
+*src/app/(public)/user/userProfile/page.tsx,f/f/ff31b48376758a3e4eb15095c5c70b6259f3db4d
+Y
+)src/app/(public)/user/createUser/page.tsx,f/a/fa3e977bb1416fffcdf6c6e53b0fc95bbba90fec
+]
+-src/app/(public)/user/changePassword/page.tsx,9/2/925f9d93a79de319e8f0c9300c8ca111be79c2b4
+a
+1test stuff/Components/AlertDialog/alertdialog.tsx,e/2/e2c33d9a906aa38aefe279481588a7a708b8cd3d
+W
+'test stuff/Components/header/header.tsx,3/f/3fd23257260f4641ab524c3504bfebcb9d97fe0d
+S
+#test stuff/lists/AssetList/page.tsx,8/f/8f30ab00473f0c5c910089f3690c5e7a15befdfa
+W
+'test stuff/user/changePassword/page.tsx,8/2/82225cca6b8328c0e01f665bae8c1ee57f70092c
+E
+test stuff/layout.tsx,d/b/db3e4a8a52c013b845cfc3b106d321759b369f3f
+]
+-test stuff/Components/sidebar/app-sidebar.tsx,9/c/9c9baed3ee729337e85c10cca2f247d934c00a67
+Z
+*test stuff/Components/sidebar/nav-main.tsx,e/f/efd04bd7ce7d8b778526af362b2ef87df90862a4
+Z
+*test stuff/Components/sidebar/nav-user.tsx,0/1/016529d4f987272f92ff3e63b3662aa6a76aff96
+f
+6test stuff/Components/tables/assetLists/data-table.tsx,2/2/221c6ef0f7a6f0554c13ef0b42383c6bb097dbdc
+c
+3test stuff/Components/tables/assetLists/columns.tsx,5/2/52a897fef0a111d66686d501066615719fe67930
+T
+$test stuff/user/userProfile/page.tsx,4/5/45cb3e95e7eed0f075ea05f716ab95b63de28e51
+V
+&src/app/(public)/Dashboard/id/page.tsx,1/6/16cd663daa58aa6cf8f1abcad92dcb18bc1bb923
+i
+9src/app/(public)/Components/tables/assetLists/columns.tsx,6/a/6ada61233562246d4b399376bc4ff808782cc0d7
+l
+<src/app/(public)/Components/tables/assetLists/data-table.tsx,6/7/67712efb7368b2f92ed6c6028443e53e8347020a
+W
+'test stuff/user/userProfile/id/page.tsx,8/c/8c644c2506ec6df4b937d65ad54fc1e0bffcac5b
+P
+ test stuff/Dashboard/id/page.tsx,3/d/3d93e366dd320430126d9b78bac417dab6639d82
