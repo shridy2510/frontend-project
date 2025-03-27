@@ -46,6 +46,7 @@ import {checkOut} from "@/app/service/action/functions/actionFunction";
 
 export default function CheckOutModal({id}){
 
+
     const formSchema = z.object({
         checkOutDate: z.date({
             required_error: "Check-out Date is required.",
@@ -56,6 +57,7 @@ export default function CheckOutModal({id}){
         user: z.string().min(1,{
             message: "User is required.",
         }),
+        location: z.string()
     });
     //users
     async function fetchUsersData(){
@@ -79,18 +81,26 @@ export default function CheckOutModal({id}){
         resolver: zodResolver(formSchema),
         defaultValues: {
             checkOutDate: "",
-            checkInDate:"",user:""
+            checkInDate:"",user:"",location:""
         },
     });
     const onSubmit = async (values) => {
-        try {await checkOut(id,Number(values.user),values.checkOutDate,values.checkInDate)
+        try {await checkOut(id,Number(values.user),values.checkOutDate,values.checkInDate,location)
 
             form.reset();
             setOpenDialog(false)
+            toast({
+                description: "Asset CheckOut successfully!",
+                className: "bg-foreground text-white",
+            });
 
         } catch (error) {
             setOpenDialog(false)
             console.error(error);
+            toast({
+                variant: "destructive",
+                description: "An error occurred",
+            });
         }
     };
     const [openDialog, setOpenDialog] = useState(false);
@@ -173,6 +183,7 @@ export default function CheckOutModal({id}){
                                 />
 
 
+
                                 <FormField
                                     control={form.control}
                                     name="user"
@@ -196,6 +207,21 @@ export default function CheckOutModal({id}){
                                                         ))}
                                                     </SelectContent>
                                                 </Select>
+                                            </div>
+                                            <FormMessage/>
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="location"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <div className="flex items-center space-x-2">
+                                                <FormLabel className="w-1/4">Location</FormLabel>
+                                                <FormControl className="flex-1">
+                                                    <Input {...field} autoComplete="off"/>
+                                                </FormControl>
                                             </div>
                                             <FormMessage/>
                                         </FormItem>

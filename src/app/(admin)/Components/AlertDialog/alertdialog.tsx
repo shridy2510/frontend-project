@@ -9,7 +9,19 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import {Check, Delete, MapPinOff, Pencil, ShieldAlert, Trash, Trash2, UserRoundMinus, Wrench} from "lucide-react";
+import {
+    Check,
+    CheckCheck,
+    Delete,
+    MapPinOff,
+    Pencil,
+    ShieldAlert,
+    Trash,
+    Trash2,
+    UserRoundMinus,
+    Wrench,
+    X
+} from "lucide-react";
 import React from "react";
 import {Button} from "@/components/ui/button";
 
@@ -186,6 +198,49 @@ export function AlertDialogDeleteSetUp({onconfirm}) {
         </AlertDialog>
     )
 }
+export function AlertDialogReject({onconfirm}) {
+    return (
+        <AlertDialog>
+            <AlertDialogTrigger asChild>
+                <Button className="h-7 w-7 border border-[#EE6352] text-[#EE6352] bg-white">
+                    <X />
+                </Button>
+
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                    <AlertDialogTitle>Reject this request?</AlertDialogTitle>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={onconfirm}>Reject</AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
+    )
+}
+export function AlertDialogAccept({onconfirm}) {
+    return (
+        <AlertDialog>
+            <AlertDialogTrigger asChild>
+                <Button className="h-7 w-7 border border-[#7796CB] text-[#7796CB] bg-white">
+                    <CheckCheck />
+                </Button>
+
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                    <AlertDialogTitle>Accept this request?</AlertDialogTitle>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={onconfirm}>Accept</AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
+    )
+}
+
 
 
 

@@ -3,7 +3,7 @@ import axios from '@/axiosConfig';
 import {Asset} from "next/dist/compiled/@next/font/dist/google";
 import {Simulate} from "react-dom/test-utils";
 import error = Simulate.error;
-export async function createAsset(serial:string, name:string, assetTag:string, status:number, cost:number, model:number,company:number ){
+export async function createAsset(serial:string, name:string, assetTag:string, status:number, cost:number, model:number,company:number ,department:string,location: string){
     const url=`${process.env.NEXT_PUBLIC_SERVER}/Asset/create`;
     try{ return await axios.post(url,
         {
@@ -13,13 +13,15 @@ export async function createAsset(serial:string, name:string, assetTag:string, s
             name: name,
             serial: serial||null,
             model_id: model||null,
-           cost:  cost||null
+           cost:  cost||null,
+            department: department ||null,
+            location: location ||null
         }
     )}catch(error){
         throw(error.response)
     }
 }
-export async function updateAsset(id,assetTag, name,serial, model_id, company_id,cost ){
+export async function updateAsset(id,assetTag, name,serial, model_id, company_id,cost ,department,location){
     const url=`${process.env.NEXT_PUBLIC_SERVER}/Asset/update`;
     try{ return await axios.put(url,
         {
@@ -30,6 +32,8 @@ export async function updateAsset(id,assetTag, name,serial, model_id, company_id
             model_id: model_id||null,
             company_id: company_id||null,
             cost: cost||null,
+            department: department||null,
+            location: location|| null
 
         }
     )}catch(error){

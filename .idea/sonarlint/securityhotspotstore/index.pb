@@ -24,8 +24,6 @@ M
 :
 
 test stuff,0/1/0170c68fe096f0bb6bc98712df6b8841fa3e4973
-C
-test stuff/test.tsx,6/2/6290c2942267fc5c009d5e75edc27fb954df1ba8
 K
 src/components/ui/label.tsx,5/3/5328c81a3077a5f13f8e5ea84466f47c5743d67d
 L
@@ -118,8 +116,6 @@ Y
 .src/app/service/userService/getUserInfoById.ts,f/6/f619fd2b41c2094331a9c253a114a27ba55a0d39
 Z
 *src/app/service/userService/getUserInfo.ts,7/e/7e48f2f649f39ccfb9b6fa8700191d586d78f66b
-R
-"src/app/(public)/userPage/page.tsx,b/7/b7965331525c0e334c479cd223ed63cf5d70a596
 [
 +src/app/(admin)/assets/createAsset/page.tsx,5/b/5b24c8332ffa7f07464205ca7bf422d5bb5045f7
 W
@@ -335,10 +331,6 @@ j
 :src/app/(admin)/Components/modals/asset/editAssetModal.tsx,9/d/9db251d29a71f8bd5963b7c286d55ec36344bd02
 p
 @src/app/(admin)/Components/modals/asset/editAssetModalButton.tsx,1/1/1122c91b451fc01449ea39cf8353e224609d5502
-g
-7src/app/(public)/Components/AlertDialog/alertdialog.tsx,5/3/53f9737650cca57b2fe53807c352db33e97b1706
-r
-Bsrc/app/(public)/Components/charts/barChart/assetValueByStatus.tsx,c/d/cd6590b28cad516248f2c50c476064cff5f7e3c6
 ]
 -src/app/(public)/Components/header/header.tsx,b/a/bac10437ecbf32662a14f73f5a47a4d7f0f71447
 c
@@ -349,20 +341,8 @@ c
 0src/app/(public)/Components/sidebar/nav-user.tsx,8/4/84ab3ba2748b5fa00ed0b53e8fa4a77d4644ff4b
 K
 src/app/(public)/layout.tsx,c/a/ca2b5b174ec2857ca568e4a48cc47b39c708f4b9
-Z
-*src/app/(public)/user/userProfile/page.tsx,f/f/ff31b48376758a3e4eb15095c5c70b6259f3db4d
-Y
-)src/app/(public)/user/createUser/page.tsx,f/a/fa3e977bb1416fffcdf6c6e53b0fc95bbba90fec
-]
--src/app/(public)/user/changePassword/page.tsx,9/2/925f9d93a79de319e8f0c9300c8ca111be79c2b4
-a
-1test stuff/Components/AlertDialog/alertdialog.tsx,e/2/e2c33d9a906aa38aefe279481588a7a708b8cd3d
 W
 'test stuff/Components/header/header.tsx,3/f/3fd23257260f4641ab524c3504bfebcb9d97fe0d
-S
-#test stuff/lists/AssetList/page.tsx,8/f/8f30ab00473f0c5c910089f3690c5e7a15befdfa
-W
-'test stuff/user/changePassword/page.tsx,8/2/82225cca6b8328c0e01f665bae8c1ee57f70092c
 E
 test stuff/layout.tsx,d/b/db3e4a8a52c013b845cfc3b106d321759b369f3f
 ]
@@ -375,8 +355,6 @@ f
 6test stuff/Components/tables/assetLists/data-table.tsx,2/2/221c6ef0f7a6f0554c13ef0b42383c6bb097dbdc
 c
 3test stuff/Components/tables/assetLists/columns.tsx,5/2/52a897fef0a111d66686d501066615719fe67930
-T
-$test stuff/user/userProfile/page.tsx,4/5/45cb3e95e7eed0f075ea05f716ab95b63de28e51
 V
 &src/app/(public)/Dashboard/id/page.tsx,1/6/16cd663daa58aa6cf8f1abcad92dcb18bc1bb923
 i
@@ -387,3 +365,43 @@ W
 'test stuff/user/userProfile/id/page.tsx,8/c/8c644c2506ec6df4b937d65ad54fc1e0bffcac5b
 P
  test stuff/Dashboard/id/page.tsx,3/d/3d93e366dd320430126d9b78bac417dab6639d82
+T
+$src/app/(public)/UserRequest/page.ts,0/e/0ef837fa4c1b8f6d02c3574f8ce3d2d06d847084
+Z
+*src/app/(public)/UserRequestAsset/page.tsx,3/e/3e2cc64a8ee9d2de1969d0c21172d1e4f1572442
+r
+Bsrc/app/(public)/Components/tables/availableAssetLists/columns.tsx,3/f/3f9688a03b22eb7c19a35f6b63b7c7d090ce030c
+u
+Esrc/app/(public)/Components/tables/availableAssetLists/data-table.tsx,3/5/35ba849b539a82a6a1e3b828521c2722d2dc2ba1
+f
+6src/app/(public)/Components/modals/requestCheckOut.tsx,9/c/9c32c18ec1c2737fc3bb728acd87f9115266fb45
+`
+0src/app/service/requestAssetService/functions.ts,d/9/d9f504c0b66df61b0ca28278d0ff5385d65f767a
+U
+%src/app/(public)/UserRequest/page.tsx,6/8/684a0311226861ad88d1e2de4e414e6baea31fc4
+R
+"src/components/ui/alert-dialog.tsx,4/f/4fae06540b315d1446196c78fe6c02849568441d
+]
+-src/app/(public)/user/userProfile/id/page.tsx,a/7/a7ceb83cd657c7120e39b15d777c72f0a4813738
+j
+:src/app/(public)/Components/tables/UserRequest/columns.tsx,4/a/4aa985521186651307a07411c81ed1c1ec96cec9
+m
+=src/app/(public)/Components/tables/UserRequest/data-table.tsx,f/f/ff7f02f0f4729b4603cd2b6d5c9716a0573d7016
+p
+@src/app/(admin)/Components/tables/alerts/pendingRequest/page.tsx,0/2/0230168833e0c233bc3f0f47e4c7951fe2b70235
+]
+-src/app/(admin)/alerts/pendingRequest/page.ts,c/5/c5f1edcd07e45d81fb6c7556a437d24ffe3a0c3c
+s
+Csrc/app/(admin)/Components/tables/alerts/pendingRequest/columns.tsx,4/e/4e841ec8ba98d7d596d4c0947dee7e1b5e444200
+v
+Fsrc/app/(admin)/Components/tables/alerts/pendingRequest/data-table.tsx,8/4/848a83f086c2293b1a0e52c4a424846a0b1e1a40
+^
+.src/app/(admin)/alerts/pendingRequest/page.tsx,9/7/97c35ace4ff9161302e1308504d0260e39bec6ad
+X
+(src/app/(admin)/report/requests/page.tsx,0/b/0b63a45d3b9cc7aad2cf27482c654ad169080006
+n
+>src/app/(admin)/Components/tables/reports/requests/columns.tsx,9/c/9cf2063a3b392c59b524bb5d7d0d2c766926c719
+q
+Asrc/app/(admin)/Components/tables/reports/requests/data-table.tsx,c/0/c09588ed67b460728c60a83851fcc79f58d53f40
+g
+7src/app/(public)/Components/AlertDialog/alertdialog.tsx,5/3/53f9737650cca57b2fe53807c352db33e97b1706

@@ -129,10 +129,12 @@ export function NavUser({
                     Create new Users
                   </DropdownMenuItem>
                 </a>
+                <a href="/alerts/pendingRequest">
                   <DropdownMenuItem>
                     <Bell/>
                     Notifications
                   </DropdownMenuItem>
+                </a>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={logOut} >

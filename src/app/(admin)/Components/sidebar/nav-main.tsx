@@ -31,12 +31,14 @@ import {Badge} from "@/components/ui/badge";
 import {useEffect, useState} from "react";
 import {count} from "d3-array";
 import {getTotalAssetAlerts} from "@/app/service/AssetService/countAndValue";
+import {getCountPendingRequest} from "@/app/service/requestAssetService/functions";
 export function NavMain() {
 
   const [isReportsOpen, setIsReportsOpen] = useState(false);
   const [isAssetReportsOpen, setIsAssetReportsOpen] = useState(false);
   const [isStatusReportsOpen,setIsStatusReportsOpen]= useState(false);
   const [countPassDueAsset,setCountPassDueAsset]=useState(0);
+  const [countPendingRequest,setPendingRequest]=useState(0)
   const [countUnderRepairAsset,setCountUnderRepairAsset]=useState(0);
   const [countLostMissingAsset,setCountLossMissingAsset]=useState(0);
   const [countBrokenAsset,setBrokenAsset]=useState(0);
@@ -51,6 +53,8 @@ export function NavMain() {
         setBrokenAsset(response.data[2]);
         setCountLossMissingAsset(response.data[3]);
         setCountTotal(response.data[4]);
+        setPendingRequest(response.data[5])
+        console.log(countPendingRequest)
 
       }catch(error){
         console.error("ok",error)
@@ -84,6 +88,15 @@ export function NavMain() {
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <SidebarMenuSub>
+                  <SidebarMenuSubItem key="subtitle5">
+                    <SidebarMenuSubButton>
+                      <a href="/alerts/pendingRequest">
+                        <span>Pending Requests</span>
+
+                      </a>
+                      <Badge className="ml-auto" variant="destructive">{countPendingRequest}</Badge>
+                    </SidebarMenuSubButton>
+                  </SidebarMenuSubItem>
                   <SidebarMenuSubItem key="subtitle1">
                     <SidebarMenuSubButton>
                       <a href="/alerts/pastDue">
@@ -339,6 +352,13 @@ export function NavMain() {
                     <SidebarMenuSubButton>
                       <a href="/report/checkOut">
                         <span>Check-Out Reports</span>
+                      </a>
+                    </SidebarMenuSubButton>
+                  </SidebarMenuSubItem>
+                  <SidebarMenuSubItem key="subtitle3">
+                    <SidebarMenuSubButton>
+                      <a href="/report/requests">
+                        <span>Request Report</span>
                       </a>
                     </SidebarMenuSubButton>
                   </SidebarMenuSubItem>

@@ -54,6 +54,8 @@ export default function EditAssetModalButton({ id }) {
         serial: z.string(),
         model_id: z.string(),
         company_id: z.string(),
+        department: z.string(),
+        location: z.string(),
         cost: z.preprocess(
             (val) => {
                 if (typeof val === "string") {
@@ -79,6 +81,8 @@ export default function EditAssetModalButton({ id }) {
         model_id: "",
         company_id: "",
         cost: "",
+        department: "",
+        location: ""
     });
 
     const { toast } = useToast();
@@ -96,7 +100,9 @@ export default function EditAssetModalButton({ id }) {
                 values.serial,
                 Number(values.model_id),
                 Number(values.company_id),
-                values.cost
+                values.cost,
+                values.department,
+                values.location,
             );
             toast({
                 description: "Update Asset successfully!",
@@ -124,9 +130,12 @@ export default function EditAssetModalButton({ id }) {
                 assetTag: data.assetTag || "",
                 name: data.name || "",
                 serial: data.serial || "",
+                department: data.serial || "",
+                location: data.serial || "",
                 model_id: data.model_id !== null ? data.model_id : "",
                 company_id: data.company_id != null ? data.company_id : "",
                 cost: data.cost !== null ? data.cost.toString() : "",
+
             };
             setAssetData(processedData);
         } catch (error) {
@@ -243,6 +252,36 @@ export default function EditAssetModalButton({ id }) {
         </FormItem>
 )}
     />
+        <FormField
+            control={form.control}
+            name="department"
+            render={({ field }) => (
+                <FormItem>
+                    <div className="flex items-center space-x-2">
+                        <FormLabel className="w-1/4">Serial</FormLabel>
+                        <FormControl className="flex-1">
+                            <Input {...field} autoComplete="off" />
+                        </FormControl>
+                    </div>
+                    <FormMessage />
+                </FormItem>
+            )}
+        />
+        <FormField
+            control={form.control}
+            name="location"
+            render={({ field }) => (
+                <FormItem>
+                    <div className="flex items-center space-x-2">
+                        <FormLabel className="w-1/4">Location</FormLabel>
+                        <FormControl className="flex-1">
+                            <Input {...field} autoComplete="off" />
+                        </FormControl>
+                    </div>
+                    <FormMessage />
+                </FormItem>
+            )}
+        />
 
     <FormField
     control={form.control}

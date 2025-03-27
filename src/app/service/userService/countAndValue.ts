@@ -11,4 +11,7 @@ export  async  function  getUsers(){
         return await axios.get(`/list/users`);
 
 }
+export async  function getIdFromUserId(userId){
 
+    return await axios.get(`/id/user/get?userId=${userId}`)
+}

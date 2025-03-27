@@ -109,10 +109,12 @@ export default function Header(){
                                         Change Password
                                     </DropdownMenuItem>
                                 </a>
-                                <DropdownMenuItem>
-                                    <Bell/>
-                                    Notifications
-                                </DropdownMenuItem>
+                                <a href="/alerts/pendingRequest">
+                                    <DropdownMenuItem>
+                                        <Bell/>
+                                        Notifications
+                                    </DropdownMenuItem>
+                                </a>
                                 <a href="/user/createUser">
                                     <DropdownMenuItem>
                                         <UserRoundPlus/>

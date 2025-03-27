@@ -5,6 +5,7 @@ import {ArrowUpDown, MoreHorizontal} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {Checkbox} from "@/components/ui/checkbox";
 import {Asset} from "@/app/AssetType";
+import React from "react";
 
 
 export const columns: ColumnDef<Asset>[] = [
@@ -73,6 +74,34 @@ export const columns: ColumnDef<Asset>[] = [
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
                     Serial
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+    },
+    {
+        accessorKey: "lastCheckout",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Check-Out Date
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+    },
+    {
+        accessorKey: "expectedCheckin",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Expected Check-In Date
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )

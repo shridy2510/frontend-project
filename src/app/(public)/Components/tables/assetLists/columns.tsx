@@ -10,6 +10,10 @@ import {Button} from "@/components/ui/button";
 import {Checkbox} from "@/components/ui/checkbox";
 import React from "react";
 import {Asset} from "@/app/AssetType";
+import CheckOutRequestButtonModal from "@/app/(public)/Components/modals/requestCheckOut";
+import { AlertDialogCheckInRequest} from "@/app/(public)/Components/AlertDialog/alertdialog";
+import {checkIn} from "@/app/service/action/functions/actionFunction";
+import {requestCheckedIn} from "@/app/service/requestAssetService/functions";
 
 
 export const columns: ColumnDef<Asset>[] = [
@@ -91,15 +95,42 @@ export const columns: ColumnDef<Asset>[] = [
         },
     },
     {
-        accessorKey: "companyName",
+        accessorKey: "lastCheckout",
         header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Company
+                    Last Check-out
                     <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+    },
+    {
+        accessorKey: "expectedCheckin",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Expected Check in
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+    },
+    {
+        accessorKey:"Actions",
+        id: "actions",
+        cell: ({ row }) => {
+            const asset = row.original
+
+            return (
+                <Button className=" border border-[#7796CB] text-[#7796CB] bg-white">
+                    <AlertDialogCheckInRequest onconfirm={()=>requestCheckedIn(asset.id)}/>
                 </Button>
             )
         },

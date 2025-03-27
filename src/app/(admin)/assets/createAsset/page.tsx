@@ -58,7 +58,9 @@ const formSchema = z.object({
     ),
     model:z.string(),
     company: z.string(),
-    status: z.string()
+    status: z.string(),
+    department: z.string(),
+    location: z.string()
 });
 
 
@@ -75,7 +77,9 @@ export default function AssetForm() {
             status: "1",
             cost: "",
             company: "",
-            model:""
+            model:"",
+            department:"",
+            location: ""
         },
     });
 
@@ -125,7 +129,7 @@ export default function AssetForm() {
 
     const onSubmit = async (values) => {
         try {
-            await createAsset(values.serial, values.name, values.assetTag, values.status, values.cost,values.model,values.company);
+            await createAsset(values.serial, values.name, values.assetTag, values.status, values.cost,values.model,values.company,values.department,values.location);
             toast({
                 description: "Asset created successfully!",
                 className: "bg-foreground text-white",
@@ -305,6 +309,36 @@ export default function AssetForm() {
                                                         </Select>
                                                         <AddModelModal/>
 
+                                                    </div>
+                                                    <FormMessage/>
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="department"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <div className="flex items-center space-x-2">
+                                                        <FormLabel className="w-1/4">Department</FormLabel>
+                                                        <FormControl className="flex-1">
+                                                            <Input {...field} autoComplete="off"/>
+                                                        </FormControl>
+                                                    </div>
+                                                    <FormMessage/>
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="location"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <div className="flex items-center space-x-2">
+                                                        <FormLabel className="w-1/4">Location</FormLabel>
+                                                        <FormControl className="flex-1">
+                                                            <Input {...field} autoComplete="off"/>
+                                                        </FormControl>
                                                     </div>
                                                     <FormMessage/>
                                                 </FormItem>

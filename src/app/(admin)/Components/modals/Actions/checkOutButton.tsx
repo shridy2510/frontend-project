@@ -38,10 +38,11 @@ import {
     DialogTrigger
 } from "@/components/ui/dialog";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
-import {toast, useToast} from "@/hooks/use-toast";
+
 import {getUsers} from "@/app/service/userService/countAndValue";
 import {checkOut} from "@/app/service/action/functions/actionFunction";
 import {Simulate} from "react-dom/test-utils";
+import {useToast} from "@/hooks/use-toast";
 
 
 
@@ -57,6 +58,7 @@ export default function CheckOutButtonModal({id}){
         user: z.string().min(1,{
             message: "User is required.",
         }),
+        location: z.string()
     });
     //users
     async function fetchUsersData(){
@@ -72,6 +74,7 @@ export default function CheckOutButtonModal({id}){
         const data=await fetchUsersData();
         setUsers(data);
     }
+    const { toast } = useToast();
 
 
 
@@ -79,20 +82,29 @@ export default function CheckOutButtonModal({id}){
         resolver: zodResolver(formSchema),
         defaultValues: {
             checkOutDate: "",
-            checkInDate:"",user:""
+            checkInDate:"",user:"",location:""
         },
     });
+
     const onSubmit = async (values) => {
         try {
-            await checkOut(id,values.user,values.checkOutDate,values.checkInDate)
+            await checkOut(id,values.user,values.checkOutDate,values.checkInDate,values.location)
             // console.log(id,Number(values.user),values.checkOutDate,values.checkInDate)
 
             form.reset();
             setOpenDialog(false)
+            toast({
+                description: "Asset CheckOut successfully!",
+                className: "bg-foreground text-white",
+            });
 
         } catch (error) {
             setOpenDialog(false)
             console.error(error);
+            toast({
+                variant: "destructive",
+                description: "An error occurred",
+            });
         }
     };
     const [openDialog, setOpenDialog] = useState(false);
@@ -200,6 +212,21 @@ export default function CheckOutButtonModal({id}){
                                                         ))}
                                                     </SelectContent>
                                                 </Select>
+                                            </div>
+                                            <FormMessage/>
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="location"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <div className="flex items-center space-x-2">
+                                                <FormLabel className="w-1/4">Location</FormLabel>
+                                                <FormControl className="flex-1">
+                                                    <Input {...field} autoComplete="off"/>
+                                                </FormControl>
                                             </div>
                                             <FormMessage/>
                                         </FormItem>

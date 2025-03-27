@@ -14,7 +14,7 @@ import {
     Bell,
     ChevronsUpDown,
     CirclePlus,
-    CreditCard, House, KeyRound,
+    CreditCard, FileUser, GitPullRequest, House, KeyRound,
     LayoutDashboard,
     List,
     LogOut,
@@ -44,21 +44,26 @@ export default function Header(){
             <div className="flex h-14 items-center px-4 ">
                 <div className="mr-4 hidden md:flex">
                     <div className=" mr-4 flex items-center space-x-2 lg:mr-6 ">
-                        <a  href="/Dashboard/id">
+                        <a href="/Dashboard/id">
                             <img src="/assets/ITAM.svg" alt="itam" className="h-16 w-16"/>
                         </a>
-
-                    </div>
-
-                    <nav className="flex items-center gap-4 text-sm xl:gap-6">
                         <a href="/Dashboard/id"
                            className="transition-colors hover:text-foreground/80 text-foreground/60 flex items-center gap-2">
                             <House/>
                             <span>Dashboard</span>
                         </a>
+                        <a href="/UserRequestAsset"
+                           className="transition-colors hover:text-foreground/80 text-foreground/60 flex items-center gap-2">
+                            <GitPullRequest/>
+                            <span>Borrow</span>
+                        </a>
+                        <a href="/UserRequest"
+                           className="transition-colors hover:text-foreground/80 text-foreground/60 flex items-center gap-2">
+                            <FileUser/>
+                            <span>My Request</span>
+                        </a>
 
-
-                    </nav>
+                    </div>
 
                 </div>
 

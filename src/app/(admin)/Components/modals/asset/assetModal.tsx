@@ -21,6 +21,8 @@ export default function ViewAssetModal({ id }) {
         lastCheckout: null,
         expectedCheckin: null,
         cost: 0,
+        department: "",
+        location:""
     });
 
     const [open, setOpen] = useState(false);
@@ -101,11 +103,19 @@ export default function ViewAssetModal({ id }) {
                         <Label className="w-32 font-semibold text-gray-600">Status</Label>
                         <div className="flex-1">{data.status || 'N/A'}</div>
                     </div>
+                    <div className="flex items-center gap-4">
+                        <Label className="w-32 font-semibold text-gray-600">Location</Label>
+                        <div className="flex-1">{data.location || 'N/A'}</div>
+                    </div>
 
                     {/* Assigned User */}
                     <div className="flex items-center gap-4">
                         <Label className="w-32 font-semibold text-gray-600">Assigned User</Label>
                         <div className="flex-1">{data.assignedUserName || 'N/A'}</div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <Label className="w-32 font-semibold text-gray-600">Department</Label>
+                        <div className="flex-1">{data.department || 'N/A'}</div>
                     </div>
 
                     {/* Last Checkout */}
@@ -128,7 +138,7 @@ export default function ViewAssetModal({ id }) {
                         </div>
                     </div>
                 </div>
-                <DialogFooter >
+                <DialogFooter>
                     <Button
                         onClick={() => setOpen(false)}
                         className="px-6"

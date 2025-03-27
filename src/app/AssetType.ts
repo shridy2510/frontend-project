@@ -33,3 +33,22 @@ export type Model={
     categoryName:string
 
 }
+
+export type RequestedAsset = {
+    id: number;
+    assetTag: string;
+    name: string;
+    modelName: string;
+    status: string;
+    deniedTime: Date | null;
+    assignedUserName: string;
+    expectedCheckin: Date;
+    expectedCheckout: Date ;
+    actualCheckin: Date ;
+    acceptTime: Date | null;
+    requestDate: Date | null;
+    adminName: string;
+    location: string;
+    assetId: number;
+    userId: number;
+};

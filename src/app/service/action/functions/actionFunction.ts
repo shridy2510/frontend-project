@@ -115,9 +115,9 @@ export async function deleteAsset(id:string){
     }
 
 }
-export async function checkOut(id, userId,lastCheckout:Date,expectedCheckin:Date){
+export async function checkOut(id, userId,lastCheckout:Date,expectedCheckin:Date,location){
     try {
-        await changeToCheckedOut(id,userId,lastCheckout,expectedCheckin) ;
+        await changeToCheckedOut(id,userId,lastCheckout,expectedCheckin,location) ;
         toast({
             description: "Asset Status change to Checked Out",
             className: "bg-foreground text-white",
